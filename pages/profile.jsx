@@ -17,6 +17,7 @@ export default function Profile({ userInfo, missions, characters }) {
                         <CardMedia image={userInfo.characterImg} component="img" sx={{ width: 220, flex: 1 }} />
                         <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                             <Typography fontSize='40px'>{userInfo.nickname}</Typography>
+                            <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
                             <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '10px', }}>
                                 <img src="/images/diamond.png" width='60px' style={{ marginRight: '10px' }} />
                                 <Typography fontSize='30px'>{userInfo.xp}</Typography>
@@ -27,7 +28,11 @@ export default function Profile({ userInfo, missions, characters }) {
                         <Typography fontSize='30px' color='#20013F'>Megszerzett jutalmak</Typography>
                         <List component={Stack} direction="row">
                             {missions.map((item) => (
-                                <Tooltip title="badge">
+                                <Tooltip className='badgeTooltip' placement='top-start' arrow title={
+                                    !userInfo.badges?.includes(item.badge_name)
+                                        ? `Ezért a jutalomért látogass el a ${item.title} szigetre`
+                                        : `Gratulálok! Megszerezted a ${item.title} sziget jutalmát!`
+                                }>
                                     <ListItem key={item.title}>
                                         <img
                                             src={item.badge_img}
