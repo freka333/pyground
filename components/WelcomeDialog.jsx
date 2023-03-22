@@ -13,11 +13,22 @@ export default function WelcomeDialog({ user, characters }) {
     const [name, setName] = useState(user.nickname);
     const [selectedCharacter, setSelectedCharacter] = useState(user.userCharacter);
     const [open, setOpen] = useState(!user.nickname || !user.userCharacter);
+    const [errorMessage, setErrorMessage] = useState(false);
 
     const router = useRouter();
 
     const refreshData = () => {
         router.replace(router.asPath);
+    }
+
+    const handleSetName = (name) => {
+        if (name.length > 15) {
+            setErrorMessage(true);
+        }
+        else {
+            setErrorMessage(false);
+        }
+        setName(name);
     }
 
     const handleListItemClick = (event, item) => {
@@ -27,23 +38,25 @@ export default function WelcomeDialog({ user, characters }) {
     const handleCharacter = async (event) => {
         event.preventDefault();
 
-        const data = {
-            id: user.id,
-            character: selectedCharacter,
-        }
+        if (!errorMessage) {
+            const data = {
+                id: user.id,
+                character: selectedCharacter,
+            }
 
-        const response = await fetch('/api/user/character', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-        const result = await response.json();
-        if (response.status < 300) {
-            refreshData();
+            const response = await fetch('/api/user/character', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            if (response.status < 300) {
+                refreshData();
+            }
+            setOpen(false);
         }
-        setOpen(false);
     }
 
     const handleNickname = async (event) => {
@@ -87,8 +100,13 @@ export default function WelcomeDialog({ user, characters }) {
                             fullWidth
                             variant="standard"
                             value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => handleSetName(e.target.value)}
                         />
+                        {errorMessage &&
+                            <Typography color='red' fontSize='14px'>
+                                Maximum 15 karakterből állhat a név!
+                            </Typography>
+                        }
                     </DialogContent>
                     <DialogActions>
                         <Button disabled={!name} variant="contained" onClick={handleNickname}>Tovább</Button>
