@@ -68,14 +68,6 @@ body {
     border-radius: 50%;
 }
 
-.buttonn {
-    max-width: '30px';
-    max-height: '30px';
-    min-width: '30px';
-    min-height: '30px';
-    border-radius: '50%';
-}
-
 .island {
     transition: 1s ease;
 }
@@ -88,9 +80,12 @@ body {
     transition: 0.5s;
 }
 
-
 .island:active {
     background-color: unset;
+}
+
+.MuiTooltip-arrow {
+    color: #594969
 }
 
 #Island1 {

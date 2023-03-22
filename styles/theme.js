@@ -23,8 +23,11 @@ const theme = createTheme({
             light: '#1cba4f',
             dark: '#2A8457'
         },
+        text: {
+            primary: '#20013F'
+        },
         error: {
-            main: red.A400,
+            main: '#ff0000'
         }
     },
     typography: {
@@ -38,7 +41,20 @@ const theme = createTheme({
                     minHeight: 50,
                 }
             }
+        },
+        MuiTooltip: {
+            styleOverrides: {
+                tooltip: {
+                    fontSize: '15px',
+                    backgroundColor: '#594969',
+                    color: '#fdfcff',
+                    margin: '0'
+                }
+            }
         }
+    },
+    shape: {
+        borderRadius: 10
     }
 });
 
