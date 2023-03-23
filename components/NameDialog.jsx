@@ -69,7 +69,7 @@ export default function NameDialog({ open, user, handleClose }) {
                 }
             </DialogContent>
             <DialogActions>
-                <Button disabled={!name} variant="contained" onClick={handleNickname}>Kész</Button>
+                <Button disabled={!name} variant="contained" onClick={handleNickname}>Mentés</Button>
             </DialogActions>
         </Dialog>
     )

@@ -38,7 +38,7 @@ export default function CharacterDialog({ open, user, characters, handleClose })
     }
 
     return (
-        <Dialog open={open} maxWidth='xs' fullWidth='true' PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+        <Dialog open={open} maxWidth='xs' fullWidth PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
             <DialogTitle>
                 Válassz egy karaktert!
             </DialogTitle>
@@ -57,7 +57,7 @@ export default function CharacterDialog({ open, user, characters, handleClose })
                 </List>
             </DialogContent>
             <DialogActions>
-                <Button disabled={!selectedCharacter} variant="contained" onClick={handleCharacter}>Kész</Button>
+                <Button disabled={!selectedCharacter} variant="contained" onClick={handleCharacter}>Mentés</Button>
             </DialogActions>
         </Dialog>
     )

@@ -1,4 +1,4 @@
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemText } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemText, Typography } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
@@ -7,136 +7,81 @@ import { useState } from "react";
 import ListItemButton from "@mui/material/ListItemButton";
 import Avatar from "@mui/material/Avatar";
 import { useRouter } from "next/router";
+import NameDialog from "./NameDialog"
+import CharacterDialog from './CharacterDialog'
 
-export default function WelcomeDialog({ user, characters }) {
-    const [dialog, setDialog] = useState(!user.nickname ? 1 : 2);
-    const [name, setName] = useState(user.nickname);
-    const [selectedCharacter, setSelectedCharacter] = useState(user.userCharacter);
-    const [open, setOpen] = useState(!user.nickname || !user.userCharacter);
-    const [errorMessage, setErrorMessage] = useState(false);
+export default function WelcomeDialog2({ user, characters }) {
+    const [selectedDialog, setSelectedDialog] = useState(!user.nickname && !user.userCharacter ? "intro" : !user.nickname ? "nickname" : !user.userCharacter ? "characters" : "");
 
-    const router = useRouter();
-
-    const refreshData = () => {
-        router.replace(router.asPath);
-    }
-
-    const handleSetName = (name) => {
-        if (name.length > 15) {
-            setErrorMessage(true);
-        }
-        else {
-            setErrorMessage(false);
-        }
-        setName(name);
-    }
-
-    const handleListItemClick = (event, item) => {
-        setSelectedCharacter(item);
-    }
-
-    const handleCharacter = async (event) => {
-        event.preventDefault();
-
-        if (!errorMessage) {
-            const data = {
-                id: user.id,
-                character: selectedCharacter,
+    const handleSelectedDialog = () => {
+        let dialog = "";
+        if (selectedDialog === "intro") {
+            if (!user.userCharacter) {
+                dialog = "characters";
             }
-
-            const response = await fetch('/api/user/character', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-            const result = await response.json();
-            if (response.status < 300) {
-                refreshData();
+            else if (!user.nickname) {
+                dialog = "nickname";
             }
-            setOpen(false);
         }
-    }
-
-    const handleNickname = async (event) => {
-        event.preventDefault();
-
-        const data = {
-            id: user.id,
-            name: name,
+        else if (selectedDialog === "characters") {
+            if (!user.nickname) {
+                dialog = "nickname";
+            }
+            else {
+                dialog = "guide";
+            }
         }
-
-        const response = await fetch('/api/user/nickname', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
-        const result = await response.json();
-        if (response.status < 300) {
-            refreshData();
+        else if (selectedDialog === "nickname") {
+            if (!user.userCharacter) {
+                dialog = "characters";
+            }
+            else {
+                dialog = "guide";
+            }
         }
-        selectedCharacter ? setOpen(false) : setDialog(2);
+        setSelectedDialog(dialog);
     }
 
     return (
-        <Dialog open={open}>
-            {dialog === 1 &&
-                <>
-                    <DialogTitle>
-                        Üdvözöllek!
-                    </DialogTitle>
+        <>
+            {selectedDialog === "intro" &&
+                <Dialog open PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+                    <DialogTitle>Üdvözöllek a PyGround világában!</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Adj meg egy becenevet!
-                        </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Név"
-                            fullWidth
-                            variant="standard"
-                            value={name}
-                            onChange={(e) => handleSetName(e.target.value)}
-                        />
-                        {errorMessage &&
-                            <Typography color='red' fontSize='14px'>
-                                Maximum 15 karakterből állhat a név!
-                            </Typography>
-                        }
+                        <Typography>
+                            Mielőtt elkezdenénk a Python nyelvvel való ismerkedést, válassz egy karaktert magadnak, akinek a képességeit fejlesztheted a tanulás során, majd nevezd el! Ez a név fog megjelenni a felületen, ezt később bármikor módosíthatod.
+                        </Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button disabled={!name} variant="contained" onClick={handleNickname}>Tovább</Button>
+                        <Button variant="contained" onClick={handleSelectedDialog}>Tovább</Button>
                     </DialogActions>
-                </>
+                </Dialog>
             }
-            {!user.userCharacter && dialog === 2 &&
-                <>
-                    <DialogTitle>
-                        Válassz egy karaktert!
-                    </DialogTitle>
+            {selectedDialog === 'characters' &&
+                <CharacterDialog open user={user} characters={characters} handleClose={handleSelectedDialog} />
+            }
+            {selectedDialog === 'nickname' &&
+                <NameDialog open user={user} handleClose={handleSelectedDialog} />
+            }
+            {selectedDialog === "guide" &&
+                <Dialog open PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+                    <DialogTitle>Szia, {user.nickname}!</DialogTitle>
                     <DialogContent>
-                        <List>
-                            {characters.map((item) => (
-                                <ListItem key={item.kind}>
-                                    <ListItemButton selected={item._id === selectedCharacter} onClick={(event) => handleListItemClick(event, item._id)}>
-                                        <Avatar alt={item.kind} src={item.icon} sx={{ width: 50, height: 50 }} />
-                                        <ListItemText>
-                                            {item.kind}
-                                        </ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                        </List>
+                        <Typography>
+                            Máris kezdhetjük a kódolást!
+                        </Typography>
+                        <Typography>
+                            Minden szigeten feladatok várnak, amiknek a sikeres teljesítését követően gyémántokat szerezhetsz, valamint egy sziget összes feladatának megoldása után egy-egy kitüntetést is bezsebelhetsz.
+                        </Typography>
+                        <Typography>
+                            Kezdődjön a kaland, sok sikert!
+                        </Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button disabled={!selectedCharacter} variant="contained" onClick={handleCharacter}>Kész</Button>
+                        <Button variant="contained" onClick={handleSelectedDialog}>Kalandra fel!</Button>
                     </DialogActions>
-                </>
+                </Dialog>
             }
-        </Dialog>
+        </>
     )
 }
