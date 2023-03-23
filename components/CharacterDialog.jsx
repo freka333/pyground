@@ -38,7 +38,7 @@ export default function CharacterDialog({ open, user, characters, handleClose })
     }
 
     return (
-        <Dialog open={open} maxWidth='xs' fullWidth PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+        <Dialog open={open} transitionDuration={0} maxWidth='xs' fullWidth PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
             <DialogTitle>
                 Válassz egy karaktert!
             </DialogTitle>

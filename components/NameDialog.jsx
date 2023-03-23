@@ -48,7 +48,7 @@ export default function NameDialog({ open, user, handleClose }) {
     }
 
     return (
-        <Dialog open={open} maxWidth='xs' fullWidth='true' PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+        <Dialog open={open} transitionDuration={0} maxWidth='xs' fullWidth='true' PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
             <DialogTitle>
                 Válassz egy nevet a karakterednek!
             </DialogTitle>

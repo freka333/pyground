@@ -10,8 +10,21 @@ import { useRouter } from "next/router";
 import NameDialog from "./NameDialog"
 import CharacterDialog from './CharacterDialog'
 
+function initDialog(name, character) {
+    if (!name && !character) {
+        return "intro";
+    }
+    else if (!name) {
+        return "nickname";
+    }
+    else if (!character) {
+        return "characters";
+    }
+    return "";
+}
+
 export default function WelcomeDialog2({ user, characters }) {
-    const [selectedDialog, setSelectedDialog] = useState(!user.nickname && !user.userCharacter ? "intro" : !user.nickname ? "nickname" : !user.userCharacter ? "characters" : "");
+    const [selectedDialog, setSelectedDialog] = useState(() => initDialog(user.nickname, user.userCharacter));
 
     const handleSelectedDialog = () => {
         let dialog = "";
@@ -45,7 +58,7 @@ export default function WelcomeDialog2({ user, characters }) {
     return (
         <>
             {selectedDialog === "intro" &&
-                <Dialog open PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+                <Dialog open transitionDuration={0} PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
                     <DialogTitle>Üdvözöllek a PyGround világában!</DialogTitle>
                     <DialogContent>
                         <Typography>
@@ -64,7 +77,7 @@ export default function WelcomeDialog2({ user, characters }) {
                 <NameDialog open user={user} handleClose={handleSelectedDialog} />
             }
             {selectedDialog === "guide" &&
-                <Dialog open PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+                <Dialog open transitionDuration={0} PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
                     <DialogTitle>Szia, {user.nickname}!</DialogTitle>
                     <DialogContent>
                         <Typography>
