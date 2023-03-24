@@ -1,57 +1,22 @@
 import dbConnect from "@/lib/mongoose";
-import Mission from "@/models/Mission";
-import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
-import initInfo from "@/lib/initInfo";
-import LessonContent from "../../components/LessonContent";
-import ExerciseContent from "../../components/ExerciseContent";
 
-export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters }) {
-    const router = useRouter();
 
-    if (hasError) {
-        return <h1>Error</h1>
-    }
+export default function ProjectPage({ a }) {
 
-    if (router.isFallback) {
-        return <h1>Loading...</h1>
-    }
     return (
         <div>
-            {JSON.stringify({ foundMission, foundTask, hasError, userInfo, characters })}
+            {JSON.stringify({ a })}
         </div>
     )
 
-    return (
-        <Layout user={userInfo} characters={characters}>
-            {
-                foundTask.kind === "lesson"
-                    ? <LessonContent user={userInfo} characters={characters} mission={foundMission} task={foundTask} />
-                    : <ExerciseContent user={userInfo} characters={characters} mission={foundMission} task={foundTask} />
-            }
-        </Layout>
-    )
 
 }
 
 export const getServerSideProps = async (context) => {
 
-    console.log("before getServerSession await")
-    const session = await getServerSession(context.req, context.res, authOptions);
-    console.log("after getServerSession await")
-
-    if (!session) {
-        return { redirect: { destination: '/', permanent: false } }
-    }
     await dbConnect();
 
-    console.log("before initInfo(session.user) await")
-    const info = await initInfo(session.user);
-    console.log("after initInfo(session.user) await")
-
-    const { userInfo, characters } = info;
+    return { props: { a: 5 } }
 
     /*console.log("before Mission.find await")
     const missionsResult = await Mission.find({})
@@ -76,7 +41,5 @@ export const getServerSideProps = async (context) => {
         }
     }
 */
-    return {
-        props: { userInfo: JSON.parse(JSON.stringify(userInfo)), characters }
-    }
+
 }
