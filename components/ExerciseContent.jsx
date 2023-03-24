@@ -1,21 +1,16 @@
-import Editor, { loader } from "@monaco-editor/react";
 import { PlayCircle, RestartAlt } from "@mui/icons-material"
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
 const theme = "night-owl";
 
+const Editor = dynamic(() => import("@monaco-editor/react"), {
+    ssr: false,
+})
+
 export default function ExerciseContent({ user, characters, mission, task }) {
     const [value, setValue] = useState('print("Python!")');
-
-    useEffect(() => {
-        const defineTheme = async () => {
-            const monaco = await loader.init();
-            monaco.editor.defineTheme(theme, themeData);
-        };
-
-        defineTheme();
-    }, [])
 
     const handleEditorChange = (value) => {
         setValue(value);
