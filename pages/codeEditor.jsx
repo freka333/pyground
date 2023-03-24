@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import themeData from "monaco-themes/themes/Night Owl.json";
 import { DeleteIcon, PlayCircle, RestartAlt } from '@mui/icons-material';
-import MissionComplete from "./MissionComplete";
+import MissionComplete from "../components/MissionComplete";
 const theme = "night-owl";
 
 const defineTheme = async () => {
