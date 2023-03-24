@@ -1,69 +1,8 @@
-import Editor, { loader } from "@monaco-editor/react";
-import { Box, Button, Grid, Typography } from "@mui/material"
-import Stack from '@mui/material/Stack';
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import themeData from "monaco-themes/themes/Night Owl.json";
-import { PlayCircle, RestartAlt } from '@mui/icons-material';
-import MissionComplete from "./MissionComplete";
-import TaskFooter from "./TaskFooter";
-const theme = "night-owl";
-
-const defineTheme = async () => {
-    const monaco = await loader.init();
-    monaco.editor.defineTheme(theme, themeData);
-};
-
-defineTheme();
+import { PlayCircle, RestartAlt } from "@mui/icons-material"
+import { Box, Button, Grid, Stack, Typography } from "@mui/material"
 
 export default function ExerciseContent({ user, characters, mission, task }) {
-    const editorRef = useRef(null);
-    const router = useRouter();
-    const [open, setOpen] = useState(false);
 
-    const [value, setValue] = useState('print("Python!")');
-    const [result, setResult] = useState(null);
-
-    const handleEditorChange = (value) => {
-        setValue(value);
-    };
-
-    const handleOnClick = async () => {
-        console.log(value)
-
-        const response = await fetch('/api/python', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ code: value }),
-        });
-        const result = await response.json();
-        setResult(result);
-    }
-
-    const handleNextTask = () => {
-        const serialNum = mission.tasks.findIndex(t => t._id === task._id)
-        const nextTask = mission.tasks[serialNum + 1]
-        if (nextTask) {
-            router.push(`/${mission.title}/${nextTask.path}`)
-        }
-        else {
-            setOpen(true);
-        }
-    }
-
-    useEffect(() => {
-        const onResize = () => {
-            editorRef.current.layout({});
-        }
-        window.addEventListener("resize", onResize)
-        return () => {
-            window.removeEventListener("resize", onResize);
-        }
-    }, [])
-
-    console.log("resutl:", typeof result)
 
     return (
         <>
@@ -90,7 +29,7 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                                 <Typography color='#ede5f4'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }} onClick={handleOnClick}>
+                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }}>
                                     Futtatás
                                 </Button>
                                 <Button variant="contained" endIcon={<RestartAlt />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15, margin: 5 }} >
@@ -98,26 +37,9 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Editor
-                            height='100%'
-                            language={'python'}
-                            value={value}
-                            theme={theme}
-                            onChange={handleEditorChange}
-                            onMount={editor => { editorRef.current = editor }}
-                            options={{ minimap: { enabled: false } }}
-                        />
                     </Stack>
-                    <Box backgroundColor='#2A173D' borderRadius='0 0 15px 15px' height='40%' padding='10px' color='white' overflow='auto'>
-                        {result?.map((line, i) => (
-                            <Typography key={i} color='white' whiteSpace='pre' fontFamily='monospace'>{line}</Typography>
-                        ))}
-
-                    </Box>
                 </Grid>
             </Grid >
-            <TaskFooter island={mission} currentTaskId={task._id} handleNextTask={handleNextTask} />
-            <MissionComplete open={open} />
         </>
     )
 }
