@@ -1,19 +1,28 @@
 import dbConnect from "@/lib/mongoose";
 import { getServerSession } from "next-auth";
+import { useRouter } from "next/router";
 import initInfo from "../../lib/initInfo";
 import Mission from "../../models/Mission";
 import { authOptions } from "../api/auth/[...nextauth]";
+import Layout from "../../components/Layout";
 
 
-export default function ProjectPage({ a }) {
+export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters }) {
+    const router = useRouter();
+
+    if (hasError) {
+        return <h1>Error</h1>
+    }
+
+    if (router.isFallback) {
+        return <h1>Loading...</h1>
+    }
 
     return (
-        <div>
-            {JSON.stringify({ a })}
-        </div>
+        <Layout user={userInfo} characters={characters}>
+            hello
+        </Layout>
     )
-
-
 }
 
 export const getServerSideProps = async (context) => {
@@ -49,6 +58,7 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-
-    return { props: { a: foundMission } }
+    return {
+        props: { foundMission, foundTask, userInfo: JSON.parse(JSON.stringify(userInfo)), characters }
+    }
 }
