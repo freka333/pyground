@@ -1,5 +1,4 @@
 import dbConnect from "@/lib/mongoose";
-import { GetServerSideProps } from "next";
 import Mission from "@/models/Mission";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
