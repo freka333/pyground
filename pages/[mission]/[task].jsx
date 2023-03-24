@@ -22,7 +22,10 @@ export const getServerSideProps = async (context) => {
 
     await dbConnect();
 
-    return { props: { a: session } }
+    const info = await initInfo(session.user);
+    const { userInfo, characters } = info;
+
+    return { props: { a: { userInfo, characters } } }
 
     /*console.log("before Mission.find await")
     const missionsResult = await Mission.find({})
