@@ -1,4 +1,6 @@
 import dbConnect from "@/lib/mongoose";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 
 export default function ProjectPage({ a }) {
@@ -13,10 +15,14 @@ export default function ProjectPage({ a }) {
 }
 
 export const getServerSideProps = async (context) => {
+    const session = await getServerSession(context.req, context.res, authOptions);
+    if (!session) {
+        return { redirect: { destination: '/', permanent: false } }
+    }
 
     await dbConnect();
 
-    return { props: { a: 5 } }
+    return { props: { a: session } }
 
     /*console.log("before Mission.find await")
     const missionsResult = await Mission.find({})
