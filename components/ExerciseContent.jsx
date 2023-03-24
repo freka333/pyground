@@ -1,16 +1,14 @@
-import { loader } from "@monaco-editor/react";
+import Editor from "@monaco-editor/react";
 import { PlayCircle, RestartAlt } from "@mui/icons-material"
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
-
-const defineTheme = async () => {
-    const monaco = await loader.init();
-    monaco.editor.defineTheme(theme, themeData);
-};
-
-defineTheme();
+import { useState } from "react";
 
 export default function ExerciseContent({ user, characters, mission, task }) {
+    const [value, setValue] = useState('print("Python!")');
 
+    const handleEditorChange = (value) => {
+        setValue(value);
+    };
 
     return (
         <>
@@ -45,6 +43,13 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                                 </Button>
                             </Grid>
                         </Grid>
+                        <Editor
+                            height='100%'
+                            language={'python'}
+                            value={value}
+                            onChange={handleEditorChange}
+                            options={{ minimap: { enabled: false } }}
+                        />
                     </Stack>
                 </Grid>
             </Grid >
