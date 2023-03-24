@@ -1,6 +1,7 @@
 import dbConnect from "@/lib/mongoose";
 import { getServerSession } from "next-auth";
 import initInfo from "../../lib/initInfo";
+import Mission from "../../models/Mission";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 
@@ -25,6 +26,8 @@ export const getServerSideProps = async (context) => {
 
     const info = await initInfo(session.user);
     const { userInfo, characters } = info;
+
+    // const missionsResult = await Mission.find({})
 
     return { props: { a: { userInfo, characters } } }
 
