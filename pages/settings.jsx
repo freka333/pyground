@@ -4,8 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import dbConnect from "@/lib/mongoose";
 import initInfo, { getCharacters } from "../lib/initInfo";
-import { Avatar, Button, Card, Grid, IconButton, Typography } from "@mui/material";
-import { Edit, Delete } from '@mui/icons-material';
+import { Avatar, Card, Grid, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { Stack } from "@mui/system";
 import NameDialog from "../components/NameDialog";
@@ -58,17 +57,13 @@ export default function Settings({ userInfo, characters, email }) {
                                 <Typography fontSize='18px' fontStyle='italic'>Név:</Typography>
                                 <div style={{ display: 'flex' }}>
                                     <Typography fontSize='25px'>{userInfo.nickname}</Typography>
-                                    <IconButton aria-label="Edit" color='secondary' onClick={handleOpenName} size='medium' disableRipple>
-                                        <Edit fontSize="inherit" />
-                                    </IconButton>
+
                                     <NameDialog open={openNameDialog} user={userInfo} handleClose={handleCloseName} />
                                 </div>
                                 <Typography fontSize='18px' fontStyle='italic'>Email:</Typography>
                                 <div style={{ display: 'flex' }}>
                                     <Typography fontSize='25px'>{email}</Typography>
-                                    <IconButton onClick={handleOpenDelete} aria-label="Delete" color='error' size='medium' disableRipple>
-                                        <Delete fontSize="inherit" />
-                                    </IconButton>
+
                                     <DeleteUserDialog open={openDeleteDialog} handleClose={handleCloseDelete} />
                                 </div>
                             </Stack>

@@ -6,6 +6,7 @@ import Mission from "../../models/Mission";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Layout from "../../components/Layout";
 import LessonContent from "../../components/LessonContent";
+import ExerciseContent from "../../components/ExerciseContent";
 
 
 export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters }) {
@@ -21,8 +22,11 @@ export default function ProjectPage({ foundMission, foundTask, hasError, userInf
 
     return (
         <Layout user={userInfo} characters={characters}>
-            <LessonContent user={userInfo} characters={characters} mission={foundMission} task={foundTask} />
-
+            {
+                foundTask.kind === "lesson"
+                    ? <LessonContent user={userInfo} characters={characters} mission={foundMission} task={foundTask} />
+                    : <ExerciseContent user={userInfo} characters={characters} mission={foundMission} task={foundTask} />
+            }
         </Layout>
     )
 }

@@ -1,7 +1,6 @@
-import { PlayCircle, RestartAlt } from "@mui/icons-material"
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const theme = "night-owl";
 
@@ -41,10 +40,10 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                                 <Typography color='#ede5f4'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }}>
+                                <Button variant="contained" sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }}>
                                     Futtatás
                                 </Button>
-                                <Button variant="contained" endIcon={<RestartAlt />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15, margin: 5 }} >
+                                <Button variant="contained" sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15, margin: 5 }} >
                                     Kód alaphelyzetbe állítása
                                 </Button>
                             </Grid>
