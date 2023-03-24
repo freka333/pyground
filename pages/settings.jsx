@@ -49,7 +49,7 @@ export default function Settings({ userInfo, characters, email }) {
                         <Grid item xs={4}>
                             <Avatar alt="User icon" src={userInfo.icon} sx={{ width: 200, height: 200, margin: '10px', border: '2px solid #370866' }} />
                             <button onClick={handleOpenCharacters} style={{ width: '45px', height: '45px', borderRadius: '50%', border: 'none', backgroundColor: '#33a16a', position: 'relative', bottom: '210px', left: '170px', boxShadow: '3px 3px 3px #847593', cursor: 'pointer' }}>
-                                <img src='/images/edit_avatar.png' width='90%' />
+                                <img src='/images/edit_avatar.png' alt="Edit avatar" width='90%' />
                             </button>
                             <CharacterDialog open={openCharacterDialog} user={userInfo} characters={characters} handleClose={handleCloseCharacters} />
                         </Grid>

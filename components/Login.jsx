@@ -21,7 +21,7 @@ export default function Login() {
                 display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: '20px'
             }}>
                 <Box sx={{ p: "10px" }}>
-                    <img src="images/logo.png" width="200" />
+                    <img src="images/logo.png" alt="Pyground logo" width="200" />
                 </Box>
                 <Button variant="contained" color='secondary' onClick={() => signIn('google')}>Sign in with Google</Button>
             </Box>

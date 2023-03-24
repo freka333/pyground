@@ -40,7 +40,7 @@ export default function Header({ user }) {
                                 <div style={{ color: '#eeeaf2', display: 'flex', flexDirection: 'column', marginRight: 10 }}>
                                     <Typography sx={{ textAlign: 'center' }}>{user.nickname}</Typography>
                                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                                        <img src="/images/diamond.png" width='25px' style={{ paddingRight: '8px' }} />
+                                        <img src="/images/diamond.png" width='25px' alt="Diamond" style={{ paddingRight: '8px' }} />
                                         <Typography>{user.xp}</Typography>
                                     </div>
                                 </div>

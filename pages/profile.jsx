@@ -19,7 +19,7 @@ export default function Profile({ userInfo, missions, characters }) {
                             <Typography fontSize='40px'>{userInfo.nickname}</Typography>
                             <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
                             <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '10px', }}>
-                                <img src="/images/diamond.png" width='60px' style={{ marginRight: '10px' }} />
+                                <img alt="Diamond" src="/images/diamond.png" width='60px' style={{ marginRight: '10px' }} />
                                 <Typography fontSize='30px'>{userInfo.xp}</Typography>
                             </Box>
                         </CardContent>
