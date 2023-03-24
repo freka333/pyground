@@ -48,7 +48,7 @@ export const getServerSideProps = async (context) => {
 
     const { userInfo, characters } = info;
 
-    console.log("before Mission.find await")
+    /*console.log("before Mission.find await")
     const missionsResult = await Mission.find({})
     console.log("after Mission.find await")
 
