@@ -29,15 +29,8 @@ export const getServerSideProps = async (context) => {
 
     const missionsResult = await Mission.find({})
 
-    // const missionsResult = await Mission.find({})
 
-    return { props: { a: missionsResult } }
-
-    /*console.log("before Mission.find await")
-    const missionsResult = await Mission.find({})
-    console.log("after Mission.find await")
-
-    /*const missions = missionsResult.map((doc) => {
+    const missions = missionsResult.map((doc) => {
         const mission = doc.toObject();
         mission._id = mission._id.toString();
         mission.tasks = JSON.parse(JSON.stringify(mission.tasks));
@@ -49,12 +42,13 @@ export const getServerSideProps = async (context) => {
     if (foundMission) {
         foundTask = foundMission.tasks.find(item => item.path === context.params?.task);
     }
- 
+
     if (!foundTask) {
         return {
             props: { hasError: true }
         }
     }
-*/
 
+
+    return { props: { a: foundMission } }
 }
