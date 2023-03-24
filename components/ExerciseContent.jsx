@@ -1,5 +1,13 @@
+import { loader } from "@monaco-editor/react";
 import { PlayCircle, RestartAlt } from "@mui/icons-material"
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
+
+const defineTheme = async () => {
+    const monaco = await loader.init();
+    monaco.editor.defineTheme(theme, themeData);
+};
+
+defineTheme();
 
 export default function ExerciseContent({ user, characters, mission, task }) {
 
