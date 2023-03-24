@@ -1,10 +1,21 @@
-import Editor from "@monaco-editor/react";
+import Editor, { loader } from "@monaco-editor/react";
 import { PlayCircle, RestartAlt } from "@mui/icons-material"
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const theme = "night-owl";
 
 export default function ExerciseContent({ user, characters, mission, task }) {
     const [value, setValue] = useState('print("Python!")');
+
+    useEffect(() => {
+        const defineTheme = async () => {
+            const monaco = await loader.init();
+            monaco.editor.defineTheme(theme, themeData);
+        };
+
+        defineTheme();
+    }, [])
 
     const handleEditorChange = (value) => {
         setValue(value);
@@ -47,6 +58,7 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                             height='100%'
                             language={'python'}
                             value={value}
+                            theme={theme}
                             onChange={handleEditorChange}
                             options={{ minimap: { enabled: false } }}
                         />
