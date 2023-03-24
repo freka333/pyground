@@ -18,6 +18,11 @@ export default function ProjectPage({ foundMission, foundTask, hasError, userInf
     if (router.isFallback) {
         return <h1>Loading...</h1>
     }
+    return (
+        <div>
+            {JSON.stringify({ foundMission, foundTask, hasError, userInfo, characters })}
+        </div>
+    )
 
     return (
         <Layout user={userInfo} characters={characters}>
