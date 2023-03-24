@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/mongoose";
 import { getServerSession } from "next-auth";
+import initInfo from "../../lib/initInfo";
 import { authOptions } from "../api/auth/[...nextauth]";
 
 
