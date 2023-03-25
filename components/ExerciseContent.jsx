@@ -79,10 +79,6 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                         </Box>
                         <Box padding='10px' overflow='auto'>
                             <Typography>{task.description}</Typography>
-                            <Typography fontSize='30px'>jfdfjdi</Typography>
-                            <Typography fontSize='30px'>jfdfjdi</Typography>
-                            <Typography fontSize='30px'>jfdfjdi</Typography>
-                            <Typography fontSize='30px'>jfdfjdi</Typography>
                         </Box>
                     </Box>
                 </Grid>

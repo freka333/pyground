@@ -26,12 +26,6 @@ export default function LessonContent({ user, characters, mission, task }) {
                 <Paper sx={{ width: '70%', borderRadius: 0, padding: '20px', backgroundColor: '#EBE1F6', marginLeft: 'auto', marginRight: 'auto' }}>
                     <Typography>{task.title}</Typography>
                     <Typography>{task.description}</Typography>
-                    <Typography fontSize='30px'>abc fdkfjdfjd ff scskdms vdobjrfogr</Typography>
-                    <Typography fontSize='30px'>abc fdkfjdfjd ff scskdms vdobjrfogr</Typography>
-                    <Typography fontSize='30px'>abc fdkfjdfjd ff scskdms vdobjrfogr</Typography>
-                    <Typography fontSize='30px'>abc fdkfjdfjd ff scskdms vdobjrfogr</Typography>
-                    <Typography fontSize='30px'>abc fdkfjdfjd ff scskdms vdobjrfogr</Typography>
-                    <Typography fontSize='30px'>abc fdkfjdfjd ff scskdms vdobjrfogr</Typography>
                 </Paper>
             </Box>
             <TaskFooter island={mission} currentTaskId={task._id} handleNextTask={handleNextTask} />
