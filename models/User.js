@@ -11,8 +11,8 @@ const userSchema = new mongoose.Schema({
     character: ObjectId,
     completedTasks: [{
         mission: mongoose.Schema.Types.ObjectId,
-        /*task: mongoose.Schema.Types.ObjectId,
-        completed: Boolean,*/
+        task: mongoose.Schema.Types.ObjectId,
+        completed: Boolean,
     }],
     badges: [String],
 })

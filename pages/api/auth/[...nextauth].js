@@ -4,6 +4,7 @@ import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../lib/mongodb";
 import dbConnect from "@/lib/mongoose";
 import User from "@/models/User";
+import Mission from "@/models/Mission";
 import { ObjectId } from "mongodb";
 
 export const authOptions = {
@@ -16,29 +17,26 @@ export const authOptions = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
-    callbacks: {
-        async signIn({ user }) {
+    events: {
+        createUser: async ({ user }) => {
             if (!user.initialized) {
                 await dbConnect();
-                const userFromDb = await User.findOne({ _id: user.id })
+                const firstMission = await Mission.findOne({ num: 1 });
+                const userFromDb = await User.findOne({ _id: user.id });
                 userFromDb.xp = 0;
                 userFromDb.completedTasks = [{
-                    mission: new ObjectId('63f681c1222e7c73011a7bac'),
-                    //task: new ObjectId('')
+                    mission: firstMission,
+                    task: firstMission.tasks[0]._id,
+                    completed: false
                 }];
                 userFromDb.badges = [];
                 userFromDb.initialized = true;
                 await userFromDb.save()
             }
-            else {
-                await dbConnect();
-                const userFromDb = await User.findOne({ _id: user.id })
-                /*const id = "63f681c1222e7c73011a7bac"
-                userFromDb.badges.push(id)*/
-                await userFromDb.save()
-            }
             return true;
-        },
+        }
+    },
+    callbacks: {
         session: async ({ session, user }) => {
             return {
                 ...session,
