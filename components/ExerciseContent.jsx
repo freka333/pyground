@@ -1,10 +1,11 @@
 import Editor, { loader } from "@monaco-editor/react";
-import { Box, Button, Grid, IconButton, List, ListItem, Paper, Typography } from "@mui/material"
+import { Box, Button, Grid, Typography } from "@mui/material"
 import Stack from '@mui/material/Stack';
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import themeData from "monaco-themes/themes/Night Owl.json";
-import { PlayCircle, RestartAlt } from '@mui/icons-material';
+import PlayCircle from '@mui/icons-material/PlayCircle';
+import RestartAlt from '@mui/icons-material/RestartAlt';
 import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
