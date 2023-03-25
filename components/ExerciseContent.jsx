@@ -10,13 +10,6 @@ import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
 
-const defineTheme = async () => {
-    const monaco = await loader.init();
-    monaco.editor.defineTheme(theme, themeData);
-};
-
-defineTheme();
-
 export default function ExerciseContent({ user, characters, mission, task }) {
     const editorRef = useRef(null);
     const router = useRouter();
@@ -53,6 +46,15 @@ export default function ExerciseContent({ user, characters, mission, task }) {
             setOpen(true);
         }
     }
+
+    useEffect(() => {
+        const defineTheme = async () => {
+            const monaco = await loader.init();
+            monaco.editor.defineTheme(theme, themeData);
+        };
+
+        defineTheme();
+    }, [])
 
     useEffect(() => {
         const onResize = () => {
