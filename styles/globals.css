@@ -10,29 +10,6 @@ body {
     color: #20013F;
 }
 
-.MuiPopover-paper {
-    background-color: #e9e2ef;
-    color: #20013F;
-    border-radius: 5%;
-    padding: 10px;
-}
-
-.menuItem {
-    color: #2f0657;
-}
-
-.menuItem:hover {
-    background-color: #d1c6da;
-}
-
-.image {
-    padding: 10px;
-}
-
-.myLink {
-    text-decoration: none;
-}
-
 .mainPage {
     background-color: #9bd4b7;
     padding: 0;

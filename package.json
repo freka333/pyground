@@ -15,6 +15,7 @@
     "@monaco-editor/react": "^4.4.6",
     "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.9",
+    "@mui/styles": "^5.11.13",
     "@next-auth/mongodb-adapter": "^1.1.1",
     "@next/font": "13.1.6",
     "@supabase/auth-helpers-nextjs": "^0.5.4",

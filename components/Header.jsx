@@ -12,9 +12,23 @@ import MenuItem from '@mui/material/MenuItem';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { useState } from "react";
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+    link: {
+        textDecoration: 'none'
+    },
+    menuItem: {
+        color: '#2f0657',
+        '&:hover': {
+            backgroundColor: '#d1c6da'
+        }
+    }
+})
 
 export default function Header({ user }) {
     const [anchorElUser, setAnchorElUser] = useState(null);
+    const classes = useStyles();
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -30,7 +44,7 @@ export default function Header({ user }) {
                 <Toolbar disableGutters variant="dense" >
                     <Link href='/' >
                         <Tooltip title="Kezdőlap">
-                            <img src="/images/logo.png" alt="Logo" height="30" className='image' />
+                            <img src="/images/logo.png" alt="Logo" height="30" style={{ padding: '10px' }} />
                         </Tooltip>
                     </Link>
 
@@ -65,13 +79,13 @@ export default function Header({ user }) {
                             onClose={handleCloseUserMenu}
                         >
 
-                            <Link className='myLink' href="/profile">
-                                <MenuItem className='menuItem'> Profil</MenuItem>
+                            <Link className={classes.link} href="/profile">
+                                <MenuItem className={classes.menuItem}> Profil</MenuItem>
                             </Link>
-                            <Link className='myLink' href="/settings">
-                                <MenuItem className='menuItem'>Beállítások</MenuItem>
+                            <Link className={classes.link} href="/settings">
+                                <MenuItem className={classes.menuItem}>Beállítások</MenuItem>
                             </Link>
-                            <MenuItem className='menuItem' onClick={() => signOut()}>
+                            <MenuItem className={classes.menuItem} onClick={() => signOut()}>
                                 Kijelentkezés
                             </MenuItem>
                         </Menu>

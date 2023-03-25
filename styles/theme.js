@@ -51,6 +51,12 @@ const theme = createTheme({
                     margin: '0'
                 }
             }
+        },
+        'MuiPopover-paper': {
+            backgroundColor: '#e9e2ef',
+            color: '#20013F',
+            borderRadius: '5%',
+            padding: '10px'
         }
     },
     shape: {
