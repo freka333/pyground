@@ -49,6 +49,9 @@ const theme = createTheme({
                     backgroundColor: '#594969',
                     color: '#fdfcff',
                     margin: '0'
+                },
+                arrow: {
+                    color: '#594969'
                 }
             }
         },

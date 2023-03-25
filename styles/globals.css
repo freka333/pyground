@@ -45,26 +45,6 @@ body {
     border-radius: 50%;
 }
 
-.island {
-    transition: 1s ease;
-}
-
-.island:hover {
-    background-color: unset;
-    -webkit-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    transform: scale(1.1);
-    transition: 0.5s;
-}
-
-.island:active {
-    background-color: unset;
-}
-
-.MuiTooltip-arrow {
-    color: #594969
-}
-
 #Island1 {
     justify-self: start;
     align-self: end;

@@ -1,7 +1,16 @@
 import { Button, List, ListItem, Popover, Typography } from "@mui/material";
 import Link from "next/link";
+import { makeStyles } from '@mui/styles';
+
+const useStyles = makeStyles({
+    link: {
+        textDecoration: 'none'
+    }
+})
 
 export default function MissionPopover({ item, completedMissions, openedPopoverId, anchorEl, handlePopoverClose }) {
+    const classes = useStyles();
+
     return (
         <Popover open={openedPopoverId == item._id} onClose={handlePopoverClose} anchorEl={anchorEl}
             anchorOrigin={{
@@ -22,7 +31,7 @@ export default function MissionPopover({ item, completedMissions, openedPopoverI
                             {
                                 item.tasks.map(task => (
                                     <ListItem key={task._id} sx={{ padding: '2px' }}>
-                                        <Link className='myLink' href={`/${item.title}/${task.path}`}>
+                                        <Link className={classes.link} href={`/${item.title}/${task.path}`}>
                                             <Typography fontSize='15px'>{task.title}</Typography>
                                         </Link>
                                     </ListItem>

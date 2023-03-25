@@ -28,7 +28,7 @@ export default function Profile({ userInfo, missions, characters }) {
                         <Typography fontSize='30px' color='#20013F'>Megszerzett jutalmak</Typography>
                         <List component={Stack} direction="row">
                             {missions.map((item) => (
-                                <Tooltip key={item._id} className='badgeTooltip' placement='top-start' arrow title={
+                                <Tooltip key={item._id} placement='top-start' arrow title={
                                     !userInfo.badges?.includes(item.badge_name)
                                         ? `Ezért a jutalomért látogass el a ${item.title} szigetre`
                                         : `Gratulálok! Megszerezted a ${item.title} sziget jutalmát!`

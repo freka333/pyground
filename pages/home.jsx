@@ -4,14 +4,31 @@ import dbConnect from "@/lib/mongoose";
 import Mission from "@/models/Mission";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
-import { Button, List, ListItem, Popover, Tooltip, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import MissionPopover from "@/components/MissionPopover";
 import initInfo from "@/lib/initInfo";
-import { style } from "@mui/system";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles(theme => ({
+    island: {
+        transition: '1s',
+        '&:hover': {
+            backgroundColor: 'unset',
+            '-webkit-transform': 'scale(1.1)',
+            '-ms-transform': 'scale(1.1)',
+            transform: 'scale(1.1)',
+            transition: '0.5s'
+        },
+        '&:active': {
+            backgroundColor: 'unset'
+        }
+    }
+}), { name: "MuiButtonBase-root" })
 
 export default function Home({ userInfo, missions, characters, completedMissions }) {
     const [anchorElement, setAnchorElement] = useState(null);
     const [openedPopoverId, setOpenedPopoverId] = useState(null);
+    const classes = useStyles();
 
     const handlePopoverOpen = (event, popoverId) => {
         setOpenedPopoverId(popoverId);
@@ -30,7 +47,7 @@ export default function Home({ userInfo, missions, characters, completedMissions
 
                     {missions.map((item) => (
                         <div key={item.title} id={item.title} >
-                            <Button key={item.title} disableRipple className='island' onClick={e => handlePopoverOpen(e, item._id)}>
+                            <Button key={item.title} disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, item._id)}>
                                 <img
                                     src={item.image}
                                     alt={item.title}
