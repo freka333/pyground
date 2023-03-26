@@ -1,4 +1,4 @@
-import { Button, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -24,8 +24,8 @@ export default function LessonContent({ user, characters, mission, task }) {
         <>
             <Box className="mainPage" display='grid' overflow='auto' >
                 <Paper sx={{ width: '70%', borderRadius: 0, padding: '20px', backgroundColor: '#EBE1F6', marginLeft: 'auto', marginRight: 'auto' }}>
-                    <Typography>{task.title}</Typography>
-                    <Typography>{task.description}</Typography>
+                    <Typography variant='h4'>{task.title}</Typography>
+                    <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                 </Paper>
             </Box>
             <TaskFooter island={mission} currentTaskId={task._id} handleNextTask={handleNextTask} />

@@ -78,7 +78,7 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                             <Typography fontSize='20px' align="center">{task.title}</Typography>
                         </Box>
                         <Box padding='10px' overflow='auto'>
-                            <Typography>{task.description}</Typography>
+                            <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                         </Box>
                     </Box>
                 </Grid>

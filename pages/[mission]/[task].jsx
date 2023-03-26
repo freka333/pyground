@@ -7,6 +7,9 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import initInfo from "@/lib/initInfo";
 import LessonContent from "../../components/LessonContent";
 import ExerciseContent from "../../components/ExerciseContent";
+import { remark } from 'remark';
+import remarkParse from 'remark-parse'
+import remarkHtml from 'remark-html';
 
 export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters }) {
     const router = useRouter();
@@ -60,6 +63,14 @@ export const getServerSideProps = async (context) => {
             props: { hasError: true }
         }
     }
+
+
+    const processedContent = await remark()
+        .use(remarkParse)
+        .use(remarkHtml)
+        .process(foundTask.description);
+    foundTask.description = processedContent.toString();
+
 
     return {
         props: { foundMission, foundTask, userInfo: JSON.parse(JSON.stringify(userInfo)), characters }
