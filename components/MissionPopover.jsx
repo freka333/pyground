@@ -1,18 +1,13 @@
-import { Button, List, ListItem, Popover, Typography } from "@mui/material";
+import { Button, IconButton, List, ListItem, Popover, Typography } from "@mui/material";
 import Link from "next/link";
-import { makeStyles } from '@mui/styles';
+import CheckCircle from '@mui/icons-material/CheckCircleOutline';
+import RemoveCircle from '@mui/icons-material/RemoveCircle';
+import Circle from '@mui/icons-material/TripOrigin';
 
-const useStyles = makeStyles({
-    link: {
-        textDecoration: 'none'
-    }
-})
-
-export default function MissionPopover({ item, completedMissions, openedPopoverId, anchorEl, handlePopoverClose }) {
-    const classes = useStyles();
+export default function MissionPopover({ mission, completedMissions, openedPopoverId, anchorEl, handlePopoverClose }) {
 
     return (
-        <Popover open={openedPopoverId == item._id} onClose={handlePopoverClose} anchorEl={anchorEl}
+        <Popover open={openedPopoverId == mission._id} onClose={handlePopoverClose} anchorEl={anchorEl} PaperProps={{ sx: { width: '380px', padding: '15px', bgcolor: '#f1eef3' } }}
             anchorOrigin={{
                 vertical: 'center',
                 horizontal: 'center',
@@ -21,25 +16,38 @@ export default function MissionPopover({ item, completedMissions, openedPopoverI
                 vertical: 'bottom',
                 horizontal: 'center',
             }} >
-            <div style={{ width: '200px' }}>
-                {!completedMissions?.includes(item._id) ?
-                    <Typography textAlign='center'>Erre a szigetre csak azután léphetsz be, ha minden korábbi feladatot megoldottál. </Typography>
-                    : <><Typography fontSize='18px' textAlign='center'>
-                        {item.title}
-                    </Typography>
-                        <List>
-                            {
-                                item.tasks.map(task => (
-                                    <ListItem key={task._id} sx={{ padding: '2px' }}>
-                                        <Link className={classes.link} href={`/${item.title}/${task.path}`}>
-                                            <Typography fontSize='15px'>{task.title}</Typography>
-                                        </Link>
-                                    </ListItem>
-                                ))
-                            }
-                        </List></>
-                }
-            </div>
+            {!completedMissions?.includes(mission._id) ?
+                <Typography textAlign='center'>Erre a szigetre csak azután léphetsz be, ha minden korábbi feladatot megoldottál. </Typography>
+                : <><Typography fontSize='18px' textAlign='center'>
+                    {mission.title}
+                </Typography>
+                    <List>
+                        {
+                            mission.tasks.map(task => (
+                                <ListItem key={task._id} sx={{ padding: '2px' }}>
+                                    <Link style={{ textDecoration: 'none', color: '#4f12cb', display: 'flex', alignItems: 'center' }} href={`/${mission.title}/${task.path}`}>
+                                        {task.state === "completed" &&
+                                            <IconButton aria-label="Check" color='secondary' disableRipple>
+                                                <CheckCircle fontSize="inherit" />
+                                            </IconButton>
+                                        }
+                                        {task.state === "locked" &&
+                                            <IconButton aria-label="Check" color='redIcon' disableRipple>
+                                                <RemoveCircle fontSize="inherit" />
+                                            </IconButton>
+                                        }
+                                        {task.state === "started" &&
+                                            <IconButton aria-label="Check" color='greyIcon' disableRipple>
+                                                <Circle fontSize="inherit" />
+                                            </IconButton>
+                                        }
+                                        <Typography fontSize='17px'>{task.title}, {task.state}</Typography>
+                                    </Link>
+                                </ListItem>
+                            ))
+                        }
+                    </List></>
+            }
         </Popover>
     )
 }

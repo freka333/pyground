@@ -28,6 +28,12 @@ const theme = createTheme({
         },
         error: {
             main: '#ff0000'
+        },
+        greyIcon: {
+            main: '#807d82'
+        },
+        redIcon: {
+            main: '#961212'
         }
     },
     typography: {

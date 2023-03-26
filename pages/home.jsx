@@ -45,22 +45,22 @@ export default function Home({ userInfo, missions, characters, completedMissions
             <div className="mainPage" style={{ display: 'flex', justifyContent: 'center', overflow: 'auto', paddingTop: '10px' }} >
                 <div style={{ display: 'grid', gridTemplateColumns: '350px 350px 350px', gridTemplateRows: '300px 300px' }}>
 
-                    {missions.map((item) => (
-                        <div key={item.title} id={item.title} >
-                            <Button key={item.title} disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, item._id)}>
+                    {missions.map((mission) => (
+                        <div key={mission.title} id={mission.title} >
+                            <Button key={mission.title} disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, mission._id)}>
                                 <img
-                                    src={item.image}
-                                    alt={item.title}
+                                    src={mission.image}
+                                    alt={mission.title}
                                     loading="lazy"
                                     width='220px'
                                     style={{
-                                        filter: !completedMissions?.includes(item._id) ? 'grayscale(100%)' : 'none',
-                                        opacity: !completedMissions?.includes(item._id) ? 0.6 : 1
+                                        filter: !completedMissions?.includes(mission._id) ? 'grayscale(100%)' : 'none',
+                                        opacity: !completedMissions?.includes(mission._id) ? 0.6 : 1
                                     }}
                                 />
                             </Button>
-                            <Typography textAlign='center' color='#20013F' fontSize='20px'>{item.title}</Typography>
-                            <MissionPopover item={item} completedMissions={completedMissions} openedPopoverId={openedPopoverId} handlePopoverClose={handlePopoverClose} anchorEl={anchorElement} />
+                            <Typography textAlign='center' color='#20013F' fontSize='20px'>{mission.title}</Typography>
+                            <MissionPopover mission={mission} completedMissions={completedMissions} openedPopoverId={openedPopoverId} handlePopoverClose={handlePopoverClose} anchorEl={anchorElement} />
                         </div>
                     ))}
                 </div>
@@ -80,13 +80,30 @@ export const getServerSideProps = async (context) => {
     const info = await initInfo(session.user);
     const { userInfo, characters } = info;
 
-    const missionsResult = await Mission.find({})
+    const missionsResult = await Mission.find({}).lean();
 
-    const missions = missionsResult.map((doc) => {
-        const mission = doc.toObject();
+    missionsResult.forEach(mission => {
         mission._id = mission._id.toString();
-        mission.tasks = JSON.parse(JSON.stringify(mission.tasks));
-        return mission
+        mission.tasks?.forEach(task => {
+            task._id = task._id.toString();
+            userInfo.completedTasks.forEach(completedTask => {
+                if (!task.state || task.state === "locked") {
+                    if (task._id === completedTask.task.toString()) {
+                        if (completedTask.completed) {
+                            task.state = "completed";
+                        }
+                        else {
+                            task.state = "started";
+                        }
+
+                    }
+                    else {
+                        task.state = "locked"
+                    }
+
+                }
+            })
+        })
     })
 
     const completedMissions = [];
@@ -99,6 +116,6 @@ export const getServerSideProps = async (context) => {
     console.log("completed:", completedMissions)
 
     return {
-        props: { userInfo: JSON.parse(JSON.stringify(userInfo)), missions: JSON.parse(JSON.stringify(missions)), characters, completedMissions }
+        props: { userInfo: JSON.parse(JSON.stringify(userInfo)), missions: missionsResult, characters, completedMissions }
     }
 }
