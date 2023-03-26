@@ -5,13 +5,22 @@ import { useState } from "react";
 import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 
-export default function LessonContent({ user, characters, mission, task }) {
+const findTaskIndex = (mission, task) => {
+    const serialNum = mission.tasks.findIndex(t => t._id === task._id)
+    return mission.tasks[serialNum + 1]
+}
+
+export default function LessonContent({ user, mission, task }) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
 
+    const nextTask = findTaskIndex(mission, task);
+
+    const handleGivenTask = (taskPath) => {
+        router.push(`/${mission.title}/${taskPath}`)
+    }
+
     const handleNextTask = () => {
-        const serialNum = mission.tasks.findIndex(t => t._id === task._id)
-        const nextTask = mission.tasks[serialNum + 1]
         if (nextTask) {
             router.push(`/${mission.title}/${nextTask.path}`)
         }
@@ -28,7 +37,7 @@ export default function LessonContent({ user, characters, mission, task }) {
                     <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                 </Paper>
             </Box>
-            <TaskFooter island={mission} currentTaskId={task._id} handleNextTask={handleNextTask} />
+            <TaskFooter island={mission} currentTaskId={task._id} isNextButton={true} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             <MissionComplete open={open} />
         </>
     )

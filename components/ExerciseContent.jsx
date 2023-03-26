@@ -10,7 +10,12 @@ import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
 
-export default function ExerciseContent({ user, characters, mission, task }) {
+const findTaskIndex = (mission, task) => {
+    const serialNum = mission.tasks.findIndex(t => t._id === task._id)
+    return mission.tasks[serialNum + 1]
+}
+
+export default function ExerciseContent({ user, mission, task }) {
     const editorRef = useRef(null);
     const router = useRouter();
     const [open, setOpen] = useState(false);
@@ -18,11 +23,13 @@ export default function ExerciseContent({ user, characters, mission, task }) {
     const [value, setValue] = useState('print("Python!")');
     const [result, setResult] = useState(null);
 
+    const nextTask = findTaskIndex(mission, task);
+
     const handleEditorChange = (value) => {
         setValue(value);
     };
 
-    const handleOnClick = async () => {
+    const handleRunClick = async () => {
         console.log(value)
 
         const response = await fetch('/api/python', {
@@ -36,13 +43,17 @@ export default function ExerciseContent({ user, characters, mission, task }) {
         setResult(result);
     }
 
+    const handleGivenTask = (taskPath) => {
+        router.push(`/${mission.title}/${taskPath}`)
+    }
+
     const handleNextTask = () => {
         const serialNum = mission.tasks.findIndex(t => t._id === task._id)
         const nextTask = mission.tasks[serialNum + 1]
-        if (nextTask) {
+        if (nextTask && nextTask.state !== "locked") {
             router.push(`/${mission.title}/${nextTask.path}`)
         }
-        else {
+        else if (!nextTask) {
             setOpen(true);
         }
     }
@@ -66,8 +77,6 @@ export default function ExerciseContent({ user, characters, mission, task }) {
         }
     }, [])
 
-    console.log("resutl:", typeof result)
-
     return (
         <>
             <Grid container backgroundColor='#bfb2cc' padding='10px' height='100%' overflow='hidden' >
@@ -89,7 +98,7 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                                 <Typography color='#ede5f4'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }} onClick={handleOnClick}>
+                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }} onClick={handleRunClick}>
                                     Futtatás
                                 </Button>
                                 <Button variant="contained" endIcon={<RestartAlt />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15, margin: 5 }} >
@@ -115,7 +124,7 @@ export default function ExerciseContent({ user, characters, mission, task }) {
                     </Box>
                 </Grid>
             </Grid >
-            <TaskFooter island={mission} currentTaskId={task._id} handleNextTask={handleNextTask} />
+            <TaskFooter island={mission} isNextButton={nextTask && nextTask.state !== "locked"} currentTaskId={task._id} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             <MissionComplete open={open} />
         </>
     )
