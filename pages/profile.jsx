@@ -29,7 +29,7 @@ export default function Profile({ userInfo, missions, characters }) {
                         <List component={Stack} direction="row">
                             {missions.map((item) => (
                                 <Tooltip key={item._id} placement='top-start' arrow title={
-                                    !userInfo.badges?.includes(item.badge_name)
+                                    !userInfo.badges?.includes(item._id.toString())
                                         ? `Ezért a jutalomért látogass el a ${item.title} szigetre`
                                         : `Gratulálok! Megszerezted a ${item.title} sziget jutalmát!`
                                 }>
@@ -39,7 +39,7 @@ export default function Profile({ userInfo, missions, characters }) {
                                             alt={item.badge_name}
                                             loading="lazy"
                                             width='150px'
-                                            style={{ filter: !userInfo.badges?.includes(item.badge_name) ? 'grayscale(1) contrast(0.1) brightness(0.8)' : 'none' }}
+                                            style={{ filter: !userInfo.badges?.includes(item._id.toString()) ? 'grayscale(1) contrast(0.1) brightness(0.8)' : 'none' }}
                                         />
                                     </ListItem>
                                 </Tooltip>

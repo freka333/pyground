@@ -16,6 +16,7 @@ const TaskTooltip = styled(({ className, ...props }) => (
   `);
 
 export default function TaskFooter({ island, currentTaskId, isNextButton, handleNextTask, handleGivenTask }) {
+    island.tasks.forEach(t => console.log(t.title, t.state))
 
     return (
         <Toolbar disableGutters variant="dense" sx={{ backgroundColor: '#011627', display: 'grid', gridTemplateColumns: '1fr auto' }} >

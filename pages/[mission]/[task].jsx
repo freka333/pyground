@@ -58,16 +58,20 @@ export const getServerSideProps = async (context) => {
     missionResult.tasks.forEach((task) => {
         task._id = task._id.toString();
         userInfo.completedTasks.forEach(completedTask => {
-            if (completedTask.task.toString() === task._id) {
-                if (completedTask.completed) {
-                    task.state = "completed";
+            if (!task.state || task.state === "locked") {
+                if (task._id === completedTask.task.toString()) {
+                    if (completedTask.completed) {
+                        task.state = "completed";
+                    }
+                    else {
+                        task.state = "started";
+                    }
+
                 }
                 else {
-                    task.state = "started";
+                    task.state = "locked"
                 }
-            }
-            else {
-                task.state = "locked"
+
             }
         })
     })

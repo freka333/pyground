@@ -30,6 +30,7 @@ export default async function handler(req, res) {
                         task: nextMissionFromDb.tasks[0]._id,
                         completed: false
                     })
+                    userFromDb.badges.push(missionFromDb._id.toString())
                 }
             }
 
