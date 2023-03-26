@@ -90,13 +90,11 @@ export const getServerSideProps = async (context) => {
     })
 
     const completedMissions = [];
-    await missions.forEach(mission => {
-        userInfo.completedTasks.forEach(task => {
-            if (task.mission.toString() === mission._id && !completedMissions.includes(mission._id)) {
-                completedMissions.push(mission._id);
-            }
-        });
-    })
+    userInfo.completedTasks.forEach(task => {
+        if (!completedMissions.includes(task.mission.toString())) {
+            completedMissions.push(task.mission.toString());
+        }
+    });
 
     console.log("completed:", completedMissions)
 
