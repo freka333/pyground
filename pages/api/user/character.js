@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/mongoose";
 import User from "@/models/User";
-import Character from "@/models/Character";
 
 export default async function handler(req, res) {
     await dbConnect();
@@ -13,8 +12,9 @@ export default async function handler(req, res) {
             res.status(200).json({ character: userFromDb.character });
             break
         }
-        default:
+        default: {
             res.status(405).end() // Method not allowed
             break
+        }
     }
 }

@@ -20,7 +20,24 @@ export default function LessonContent({ user, mission, task }) {
         router.push(`/${mission.title}/${taskPath}`)
     }
 
-    const handleNextTask = () => {
+    const handleNextTask = async () => {
+        if (task.state === "started") {
+            const data = {
+                id: user.id,
+                taskId: task._id,
+                missionId: mission._id,
+                point: 10,
+            }
+            const responseTaskCompleted = await fetch('/api/user/taskCompleted', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+            await responseTaskCompleted.json();
+        }
+
         if (nextTask) {
             router.push(`/${mission.title}/${nextTask.path}`)
         }
