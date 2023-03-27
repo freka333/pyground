@@ -41,7 +41,7 @@ export default function MissionPopover({ mission, completedMissions, openedPopov
                                                 <Circle fontSize="inherit" />
                                             </IconButton>
                                         }
-                                        <Typography fontSize='17px'>{task.title}, {task.state}</Typography>
+                                        <Typography fontSize='17px'>{task.title}</Typography>
                                     </Link>
                                 </ListItem>
                             ))
