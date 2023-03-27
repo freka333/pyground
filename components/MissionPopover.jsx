@@ -25,24 +25,23 @@ export default function MissionPopover({ mission, completedMissions, openedPopov
                         {
                             mission.tasks.map(task => (
                                 <ListItem key={task._id} sx={{ padding: '2px' }}>
-                                    <Link style={{ textDecoration: 'none', color: '#4f12cb', display: 'flex', alignItems: 'center' }} href={`/${mission.title}/${task.path}`}>
-                                        {task.state === "completed" &&
-                                            <IconButton aria-label="Check" color='secondary' disableRipple>
-                                                <CheckCircle fontSize="inherit  " />
-                                            </IconButton>
-                                        }
-                                        {task.state === "locked" &&
-                                            <IconButton aria-label="Check" disableRipple>
+                                    {task.state === "locked"
+                                        ? <>
+                                            <IconButton aria-label="Locked" disableRipple>
                                                 <Lock fontSize="inherit" />
                                             </IconButton>
-                                        }
-                                        {task.state === "started" &&
-                                            <IconButton aria-label="Check" color='greyIcon' disableRipple>
-                                                <Circle fontSize="inherit" />
+                                            <Typography fontSize='17px'>{task.title}</Typography>
+                                        </>
+                                        : <Link style={{ textDecoration: 'none', color: '#4f12cb', display: 'flex', alignItems: 'center' }} href={`/${mission.title}/${task.path}`}>
+                                            <IconButton aria-label={task.state === "completed" ? "Checkmark" : "Circle"} color={task.state === "completed" ? "secondary" : "greyIcon"} disableRipple>
+                                                {task.state === "completed"
+                                                    ? <CheckCircle fontSize="inherit  " />
+                                                    : <Circle fontSize="inherit" />
+                                                }
                                             </IconButton>
-                                        }
-                                        <Typography fontSize='17px'>{task.title}</Typography>
-                                    </Link>
+                                            <Typography fontSize='17px'>{task.title}</Typography>
+                                        </Link>
+                                    }
                                 </ListItem>
                             ))
                         }
