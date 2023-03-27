@@ -15,10 +15,10 @@ const findTaskIndex = (mission, task) => {
     return mission.tasks[serialNum + 1]
 }
 
-export default function ExerciseContent({ user, mission, task }) {
+export default function ExerciseContent({ user, mission, task, missionIdList }) {
     const editorRef = useRef(null);
     const router = useRouter();
-    const [open, setOpen] = useState(false);
+    const [openMissionComplete, setOpenMissionComplete] = useState(false);
 
     const refreshData = () => {
         router.replace(router.asPath);
@@ -78,7 +78,7 @@ export default function ExerciseContent({ user, mission, task }) {
             router.push(`/${mission.title}/${nextTask.path}`)
         }
         else if (!nextTask) {
-            setOpen(true);
+            setOpenMissionComplete(true);
         }
     }
 
@@ -149,7 +149,7 @@ export default function ExerciseContent({ user, mission, task }) {
                 </Grid>
             </Grid >
             <TaskFooter island={mission} taskState={task.state} nextTaskState={nextTask?.state} currentTaskId={task._id} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
-            <MissionComplete open={open} island={mission} />
+            <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
         </>
     )
 }

@@ -105,6 +105,7 @@ export const getServerSideProps = async (context) => {
             })
         })
     })
+    missionsResult.sort((a, b) => a.num - b.num);
 
     const completedMissions = [];
     userInfo.completedTasks.forEach(task => {
@@ -112,8 +113,6 @@ export const getServerSideProps = async (context) => {
             completedMissions.push(task.mission.toString());
         }
     });
-
-    console.log("completed:", completedMissions)
 
     return {
         props: { userInfo: JSON.parse(JSON.stringify(userInfo)), missions: missionsResult, characters, completedMissions }

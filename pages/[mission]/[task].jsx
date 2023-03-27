@@ -10,7 +10,7 @@ import ExerciseContent from "../../components/ExerciseContent";
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 
-export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters }) {
+export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters, missionIdList }) {
     const router = useRouter();
 
     if (hasError) {
@@ -25,8 +25,8 @@ export default function ProjectPage({ foundMission, foundTask, hasError, userInf
         <Layout user={userInfo} characters={characters}>
             {
                 foundTask.kind === "lesson"
-                    ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} />
-                    : <ExerciseContent user={userInfo} mission={foundMission} task={foundTask} />
+                    ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
+                    : <ExerciseContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
             }
         </Layout>
     )
@@ -42,11 +42,24 @@ export const getServerSideProps = async (context) => {
     const info = await initInfo(session.user);
     const { userInfo, characters } = info;
 
-    const missionResult = await Mission.findOne({ title: context.params?.mission }).lean();
+    const missionIdList = [];
+
+    const missionsResult = await Mission.find({}).lean();
+
+    missionsResult.forEach(mission => {
+        mission._id = mission._id.toString();
+        missionIdList.push({
+            id: mission._id,
+            num: mission.num
+        });
+    })
+    missionIdList.sort((a, b) => a.num - b.num);
+
+    const mission = missionsResult.find(mission => mission.title === context.params?.mission);
 
     let foundTask;
-    if (missionResult) {
-        foundTask = missionResult.tasks.find(item => item.path === context.params?.task);
+    if (mission) {
+        foundTask = mission.tasks.find(item => item.path === context.params?.task);
     }
 
     if (!foundTask) {
@@ -55,7 +68,7 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-    missionResult.tasks.forEach((task) => {
+    mission.tasks.forEach((task) => {
         task._id = task._id.toString();
         userInfo.completedTasks.forEach(completedTask => {
             if (!task.state || task.state === "locked") {
@@ -76,14 +89,12 @@ export const getServerSideProps = async (context) => {
         })
     })
 
-    missionResult._id = missionResult._id.toString();
-
     const processedContent = await remark()
         .use(remarkHtml)
         .process(foundTask.description);
     foundTask.description = processedContent.toString();
 
     return {
-        props: { foundMission: missionResult, foundTask: foundTask, userInfo: JSON.parse(JSON.stringify(userInfo)), characters }
+        props: { foundMission: mission, foundTask, userInfo: JSON.parse(JSON.stringify(userInfo)), characters, missionIdList }
     }
 }

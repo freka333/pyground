@@ -10,9 +10,9 @@ const findTaskIndex = (mission, task) => {
     return mission.tasks[serialNum + 1]
 }
 
-export default function LessonContent({ user, mission, task }) {
+export default function LessonContent({ user, mission, task, missionIdList }) {
     const router = useRouter();
-    const [open, setOpen] = useState(false);
+    const [openMissionComplete, setOpenMissionComplete] = useState(false);
 
     const nextTask = findTaskIndex(mission, task);
 
@@ -42,7 +42,7 @@ export default function LessonContent({ user, mission, task }) {
             router.push(`/${mission.title}/${nextTask.path}`)
         }
         else {
-            setOpen(true);
+            setOpenMissionComplete(true);
         }
     }
 
@@ -55,7 +55,7 @@ export default function LessonContent({ user, mission, task }) {
                 </Paper>
             </Box>
             <TaskFooter island={mission} currentTaskId={task._id} taskState={task.state} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
-            <MissionComplete open={open} island={mission} />
+            <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
         </>
     )
 }
