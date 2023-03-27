@@ -1,5 +1,5 @@
-import { Box, Container, Link, Toolbar, Button, List, Tooltip } from "@mui/material";
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { Toolbar, Button, Tooltip } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Lock from '@mui/icons-material/Lock';
 import { makeStyles } from "@mui/styles";
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function TaskFooter({ island, currentTaskId, taskState, nextTaskState, handleNextTask, handleGivenTask }) {
+export default function TaskFooter({ island, currentTask, nextTaskState, handleNextTask, handleGivenTask }) {
     const classes = useStyles();
 
     return (
@@ -36,14 +36,14 @@ export default function TaskFooter({ island, currentTaskId, taskState, nextTaskS
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px' }}>
                 <img src={island.image} alt={island.title} width='40px' />
                 {island.tasks.map(task => (
-                    <TaskTooltip key={task._id} title={<>{task._id !== currentTaskId && task.state === "locked" && <Lock />}{task.title}</>}>
-                        <button style={{ marginRight: '10px' }} className={'dot ' + (task._id === currentTaskId
+                    <TaskTooltip key={task._id} title={<>{task._id !== currentTask._id && task.state === "locked" && <Lock />}{task.title}</>}>
+                        <button style={{ marginRight: '10px' }} className={'dot ' + (task._id === currentTask._id
                             ? "currentDot"
                             : task.state === 'locked' ? "lockedDot" : "completedDot")} onClick={() => { if (task.state !== "locked") handleGivenTask(task.path) }} />
                     </TaskTooltip>
                 ))}
             </div>
-            <Button variant="contained" sx={{ marginRight: '10px', opacity: taskState === "completed" ? 100 : 0, maxWidth: '110px', minWidth: '110px', backgroundColor: 'secondary.dark', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75', } }} onClick={handleNextTask}>
+            <Button variant="contained" sx={{ marginRight: '10px', opacity: currentTask.kind === "lesson" || currentTask.state === "completed" ? 100 : 0, maxWidth: '110px', minWidth: '110px', backgroundColor: 'secondary.dark', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75', } }} onClick={handleNextTask}>
                 {nextTaskState ? "Következő" : "Kész!"}
             </Button>
         </Toolbar>

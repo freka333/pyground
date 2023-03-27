@@ -148,7 +148,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
                     </Box>
                 </Grid>
             </Grid >
-            <TaskFooter island={mission} taskState={task.state} nextTaskState={nextTask?.state} currentTaskId={task._id} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
+            <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
         </>
     )

@@ -2,6 +2,7 @@ import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import FirstCompletedDialog from "./FirstCompletedDialog";
 import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 
@@ -13,8 +14,13 @@ const findTaskIndex = (mission, task) => {
 export default function LessonContent({ user, mission, task, missionIdList }) {
     const router = useRouter();
     const [openMissionComplete, setOpenMissionComplete] = useState(false);
+    const [openFirstDialog, setOpenFirstDialog] = useState(false);
 
     const nextTask = findTaskIndex(mission, task);
+
+    const openNextTask = () => {
+        router.push(`/${mission.title}/${nextTask.path}`);
+    }
 
     const handleGivenTask = (taskPath) => {
         router.push(`/${mission.title}/${taskPath}`)
@@ -36,10 +42,16 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
                 body: JSON.stringify(data),
             });
             await responseTaskCompleted.json();
+
+            if (mission.num === 1 && task._id === mission.tasks[0]._id) {
+                setOpenFirstDialog(true);
+            }
         }
 
         if (nextTask) {
-            router.push(`/${mission.title}/${nextTask.path}`)
+            if (nextTask.state !== "locked") {
+                openNextTask();
+            }
         }
         else {
             setOpenMissionComplete(true);
@@ -54,8 +66,9 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
                     <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                 </Paper>
             </Box>
-            <TaskFooter island={mission} currentTaskId={task._id} taskState={task.state} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
+            <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
+            <FirstCompletedDialog open={openFirstDialog} handleClick={openNextTask} />
         </>
     )
 }

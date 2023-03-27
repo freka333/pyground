@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useRouter } from "next/router";
 
 export default function MissionComplete({ open, island, missionIdList }) {
@@ -13,13 +13,13 @@ export default function MissionComplete({ open, island, missionIdList }) {
     }
     return (
         <Dialog open={open} fullWidth maxWidth="sm" PaperProps={{ sx: { padding: '5px', bgcolor: '#f1eef3' } }} >
-            <DialogTitle color='360c61'>Gratulálok!</DialogTitle>
+            <DialogTitle color='360c61' textAlign='center'>Gratulálok!</DialogTitle>
             <DialogContent>
                 <DialogContentText color='360c61'>
                     {island.num < missionIdList.length ? `Végeztél a ${island.title} sziget minden feladatával, így feloldottál egy új jutalmat, és egy új szigetet!` : "Minden feladatot teljesítettél, ezért megkaptad a legsikeresebbeknek járó jutalmat! Szép munka!"}
                 </DialogContentText>
                 <img src={island.badge_img} alt={island.title} width='120px' style={{ display: 'flex', margin: 'auto' }} />
-                <DialogActions sx={{ justifyContent: 'center' }}>
+                <DialogActions sx={{ justifyContent: 'center', marginTop: '10px' }}>
                     <Button variant="contained" onClick={handleBadgeClick}>
                         Mutasd a jutalmaimat!
                     </Button>
