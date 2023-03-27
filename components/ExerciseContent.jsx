@@ -11,8 +11,8 @@ import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
 
 const findTaskIndex = (mission, task) => {
-    const serialNum = mission.tasks.findIndex(t => t._id === task._id)
-    return mission.tasks[serialNum + 1]
+    const index = mission.tasks.findIndex(t => t._id === task._id)
+    return mission.tasks[index + 1]
 }
 
 export default function ExerciseContent({ user, mission, task, missionIdList }) {
@@ -34,8 +34,6 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
     };
 
     const handleRunClick = async () => {
-        console.log(value)
-
         const response = await fetch('/api/python', {
             method: 'POST',
             headers: {
@@ -72,8 +70,8 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
     }
 
     const handleNextTask = () => {
-        const serialNum = mission.tasks.findIndex(t => t._id === task._id)
-        const nextTask = mission.tasks[serialNum + 1]
+        const index = mission.tasks.findIndex(t => t._id === task._id)
+        const nextTask = mission.tasks[index + 1]
         if (nextTask && nextTask.state !== "locked") {
             router.push(`/${mission.title}/${nextTask.path}`)
         }

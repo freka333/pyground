@@ -43,7 +43,7 @@ export default function TaskFooter({ island, currentTask, nextTaskState, handleN
                     </TaskTooltip>
                 ))}
             </div>
-            <Button variant="contained" sx={{ marginRight: '10px', opacity: currentTask.kind === "lesson" || currentTask.state === "completed" ? 100 : 0, maxWidth: '110px', minWidth: '110px', backgroundColor: 'secondary.dark', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75', } }} onClick={handleNextTask}>
+            <Button variant="contained" onClick={handleNextTask} sx={{ marginRight: '10px', visibility: currentTask.kind === "lesson" || currentTask.state === "completed" ? 'visible' : 'hidden', maxWidth: '110px', minWidth: '110px', backgroundColor: 'secondary.dark', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75', } }} >
                 {nextTaskState ? "Következő" : "Kész!"}
             </Button>
         </Toolbar>

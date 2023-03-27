@@ -7,8 +7,8 @@ import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 
 const findTaskIndex = (mission, task) => {
-    const serialNum = mission.tasks.findIndex(t => t._id === task._id)
-    return mission.tasks[serialNum + 1]
+    const index = mission.tasks.findIndex(t => t._id === task._id)
+    return mission.tasks[index + 1]
 }
 
 export default function LessonContent({ user, mission, task, missionIdList }) {
@@ -49,9 +49,7 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
         }
 
         if (nextTask) {
-            if (nextTask.state !== "locked") {
-                openNextTask();
-            }
+            openNextTask();
         }
         else {
             setOpenMissionComplete(true);
