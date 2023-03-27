@@ -120,10 +120,10 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
                                 <Typography color='#ede5f4'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} style={{ borderRadius: 15 }} onClick={handleRunClick}>
+                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ borderRadius: '15px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} onClick={handleRunClick}>
                                     Futtatás
                                 </Button>
-                                <Button variant="contained" endIcon={<RestartAlt />} sx={{ backgroundColor: 'secondary.main', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} style={{ borderRadius: 15, margin: 5 }} >
+                                <Button variant="contained" endIcon={<RestartAlt />} sx={{ borderRadius: '15px', margin: '5px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} >
                                     Kód alaphelyzetbe állítása
                                 </Button>
                             </Grid>
@@ -138,11 +138,15 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
                             options={{ minimap: { enabled: false } }}
                         />
                     </Stack>
-                    <Box backgroundColor='#2A173D' borderRadius='0 0 15px 15px' height='40%' padding='10px' color='white' overflow='auto'>
+                    <Box backgroundColor='#2A173D' height='40%' padding='10px' color='white' overflow='auto'>
                         {result?.map((line, i) => (
                             <Typography key={i} color='white' whiteSpace='pre' fontFamily='monospace'>{line}</Typography>
                         ))}
-
+                    </Box>
+                    <Box backgroundColor='#2A173D' borderRadius='0 0 20px 20px' display='flex' justifyContent='flex-end'>
+                        <Box backgroundColor='#7b5f96' borderRadius='20px 0px' padding='10px'  >
+                            <Typography color='#ede5f4'>Terminal</Typography>
+                        </Box>
                     </Box>
                 </Grid>
             </Grid >
