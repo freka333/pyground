@@ -122,10 +122,10 @@ export default function ExerciseContent({ user, mission, task }) {
                                 <Typography color='#ede5f4'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15 }} onClick={handleRunClick}>
+                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ backgroundColor: 'secondary.main', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} style={{ borderRadius: 15 }} onClick={handleRunClick}>
                                     Futtatás
                                 </Button>
-                                <Button variant="contained" endIcon={<RestartAlt />} sx={{ backgroundColor: 'secondary.main' }} style={{ borderRadius: 15, margin: 5 }} >
+                                <Button variant="contained" endIcon={<RestartAlt />} sx={{ backgroundColor: 'secondary.main', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} style={{ borderRadius: 15, margin: 5 }} >
                                     Kód alaphelyzetbe állítása
                                 </Button>
                             </Grid>

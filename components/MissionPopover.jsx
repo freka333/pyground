@@ -1,7 +1,7 @@
 import { Button, IconButton, List, ListItem, Popover, Typography } from "@mui/material";
 import Link from "next/link";
 import CheckCircle from '@mui/icons-material/CheckCircleOutline';
-import RemoveCircle from '@mui/icons-material/RemoveCircle';
+import Lock from '@mui/icons-material/Lock';
 import Circle from '@mui/icons-material/TripOrigin';
 
 export default function MissionPopover({ mission, completedMissions, openedPopoverId, anchorEl, handlePopoverClose }) {
@@ -28,12 +28,12 @@ export default function MissionPopover({ mission, completedMissions, openedPopov
                                     <Link style={{ textDecoration: 'none', color: '#4f12cb', display: 'flex', alignItems: 'center' }} href={`/${mission.title}/${task.path}`}>
                                         {task.state === "completed" &&
                                             <IconButton aria-label="Check" color='secondary' disableRipple>
-                                                <CheckCircle fontSize="inherit" />
+                                                <CheckCircle fontSize="inherit  " />
                                             </IconButton>
                                         }
                                         {task.state === "locked" &&
-                                            <IconButton aria-label="Check" color='redIcon' disableRipple>
-                                                <RemoveCircle fontSize="inherit" />
+                                            <IconButton aria-label="Check" disableRipple>
+                                                <Lock fontSize="inherit" />
                                             </IconButton>
                                         }
                                         {task.state === "started" &&

@@ -1,6 +1,7 @@
 import { Box, Container, Link, Toolbar, Button, List, Tooltip } from "@mui/material";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Lock from '@mui/icons-material/Lock';
+import { makeStyles } from "@mui/styles";
 
 const TaskTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} componentsProps={{ tooltip: { className: className } }} />
@@ -15,8 +16,20 @@ const TaskTooltip = styled(({ className, ...props }) => (
       justify-content: center;
   `);
 
+const useStyles = makeStyles({
+    button: {
+        backgroundColor: '#29a366',
+        color: '#ebf3ef',
+        marginRight: '10px',
+        '&:hover': {
+            backgroundColor: '#34cd75',
+            color: '#fff',
+        },
+    }
+})
+
 export default function TaskFooter({ island, currentTaskId, isNextButton, handleNextTask, handleGivenTask }) {
-    island.tasks.forEach(t => console.log(t.title, t.state))
+    const classes = useStyles();
 
     return (
         <Toolbar disableGutters variant="dense" sx={{ backgroundColor: '#011627', display: 'grid', gridTemplateColumns: '1fr auto' }} >
@@ -30,9 +43,7 @@ export default function TaskFooter({ island, currentTaskId, isNextButton, handle
                     </TaskTooltip>
                 ))}
             </div>
-            {isNextButton &&
-                <Button variant="contained" sx={{ backgroundColor: 'secondary.dark', marginRight: '10px' }} onClick={handleNextTask}>Következő</Button>
-            }
+            <Button variant="contained" disabled={!isNextButton} sx={{ backgroundColor: 'secondary.dark', color: 'ebf3ef', marginRight: '10px', ':hover': { backgroundColor: '#34cd75', } }} onClick={handleNextTask}>Következő</Button>
         </Toolbar>
 
     )
