@@ -28,7 +28,7 @@ const useStyles = makeStyles({
     }
 })
 
-export default function TaskFooter({ island, currentTaskId, isNextButton, handleNextTask, handleGivenTask }) {
+export default function TaskFooter({ island, currentTaskId, taskState, nextTaskState, handleNextTask, handleGivenTask }) {
     const classes = useStyles();
 
     return (
@@ -43,7 +43,9 @@ export default function TaskFooter({ island, currentTaskId, isNextButton, handle
                     </TaskTooltip>
                 ))}
             </div>
-            <Button variant="contained" disabled={!isNextButton} sx={{ backgroundColor: 'secondary.dark', color: 'ebf3ef', marginRight: '10px', ':hover': { backgroundColor: '#34cd75', } }} onClick={handleNextTask}>Következő</Button>
+            <Button variant="contained" sx={{ marginRight: '10px', opacity: taskState === "completed" ? 100 : 0, maxWidth: '110px', minWidth: '110px', backgroundColor: 'secondary.dark', color: 'ebf3ef', ':hover': { backgroundColor: '#34cd75', } }} onClick={handleNextTask}>
+                {nextTaskState ? "Következő" : "Kész!"}
+            </Button>
         </Toolbar>
 
     )

@@ -148,8 +148,8 @@ export default function ExerciseContent({ user, mission, task }) {
                     </Box>
                 </Grid>
             </Grid >
-            <TaskFooter island={mission} isNextButton={nextTask && nextTask.state !== "locked"} currentTaskId={task._id} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
-            <MissionComplete open={open} />
+            <TaskFooter island={mission} taskState={task.state} nextTaskState={nextTask?.state} currentTaskId={task._id} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
+            <MissionComplete open={open} island={mission} />
         </>
     )
 }

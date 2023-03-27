@@ -54,8 +54,8 @@ export default function LessonContent({ user, mission, task }) {
                     <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                 </Paper>
             </Box>
-            <TaskFooter island={mission} currentTaskId={task._id} isNextButton={true} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
-            <MissionComplete open={open} />
+            <TaskFooter island={mission} currentTaskId={task._id} taskState={task.state} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
+            <MissionComplete open={open} island={mission} />
         </>
     )
 }
