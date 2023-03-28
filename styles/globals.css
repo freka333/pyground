@@ -5,6 +5,10 @@ body {
     height: 100%;
 }
 
+h5 {
+    margin: auto;
+}
+
 .MuiMenu-root ul {
     background-color: #ebe6ef;
     color: #20013F;
@@ -17,7 +21,8 @@ body {
     flex: 1;
 }
 
-blockquote {
+blockquote,
+pre {
     background-color: #dad1e4;
     margin: 10px;
     padding: 10px;
