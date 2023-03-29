@@ -45,6 +45,7 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
 
             if (mission.num === 1 && task._id === mission.tasks[0]._id) {
                 setOpenFirstDialog(true);
+                return
             }
         }
 
