@@ -3,7 +3,7 @@ import { signIn } from "next-auth/react";
 
 const styles = {
     container: {
-        backgroundImage: `url(${process.env.NEXTAUTH_URL}/images/login_bg.jpg)`,
+        backgroundImage: 'url(images/login_bg.jpg)',
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
