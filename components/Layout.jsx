@@ -1,5 +1,5 @@
-import Header from "./Header"
-import WelcomeDialog from "./WelcomeDialog"
+import Header from "./Header";
+import WelcomeDialog from "./WelcomeDialog";
 
 export default function Layout({ children, user, characters }) {
     return (

@@ -5,7 +5,6 @@ import clientPromise from "../../../lib/mongodb";
 import dbConnect from "@/lib/mongoose";
 import User from "@/models/User";
 import Mission from "@/models/Mission";
-import { ObjectId } from "mongodb";
 
 export const authOptions = {
     adapter: MongoDBAdapter(clientPromise),

@@ -65,8 +65,6 @@ export const getServerSideProps = async (context) => {
         foundTask = mission.tasks.find(item => item.path === context.params?.task);
     }
 
-    console.log("name:", userInfo.nickname)
-
     if (!foundTask || !userInfo.completedTasks.find(task => task.task.toString() === foundTask._id.toString())) {
         return {
             props: { hasError: true, userInfo: JSON.parse(JSON.stringify(userInfo)), characters }

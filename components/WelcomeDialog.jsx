@@ -1,14 +1,8 @@
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemText, Typography } from "@mui/material";
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import { useState } from "react";
-import ListItemButton from "@mui/material/ListItemButton";
-import Avatar from "@mui/material/Avatar";
-import { useRouter } from "next/router";
-import NameDialog from "./NameDialog"
-import CharacterDialog from './CharacterDialog'
+import NameDialog from "./NameDialog";
+import CharacterDialog from './CharacterDialog';
 
 function initDialog(name, character) {
     if (!name && !character) {

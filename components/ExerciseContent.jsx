@@ -44,7 +44,6 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
         const result = await response.json();
 
         if (task.state === "started" && result.state === "completed") {
-            console.log('yes')
             const data = {
                 id: user.id,
                 taskId: task._id,
