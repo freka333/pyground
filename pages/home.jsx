@@ -8,6 +8,7 @@ import { Button, Typography } from "@mui/material";
 import MissionPopover from "@/components/MissionPopover";
 import initInfo from "@/lib/initInfo";
 import { makeStyles } from "@mui/styles";
+import CopyrightButton from "../components/CopyrightButton";
 
 const useStyles = makeStyles(theme => ({
     island: {
@@ -28,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 export default function Home({ userInfo, missions, characters, completedMissions }) {
     const [anchorElement, setAnchorElement] = useState(null);
     const [openedPopoverId, setOpenedPopoverId] = useState(null);
+    const [openExternalDialog, setOpenExternalDialog] = useState(false);
     const classes = useStyles();
 
     const handlePopoverOpen = (event, popoverId) => {
@@ -40,9 +42,17 @@ export default function Home({ userInfo, missions, characters, completedMissions
         setOpenedPopoverId(null);
     }
 
+    const handleOpenExternalDialog = () => {
+        setOpenExternalDialog(true);
+    };
+
+    const handleCloseExternalDialog = () => {
+        setOpenExternalDialog(false);
+    };
+
     return (
         <Layout user={userInfo} characters={characters}>
-            <div className="mainPage" style={{ display: 'flex', justifyContent: 'center', overflow: 'auto', paddingTop: '10px' }} >
+            <div className="mainPage" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', overflow: 'auto', paddingTop: '10px' }} >
                 <div style={{ display: 'grid', gridTemplateColumns: '350px 350px 350px', gridTemplateRows: '300px 300px' }}>
 
                     {missions.map((mission) => (
@@ -64,6 +74,7 @@ export default function Home({ userInfo, missions, characters, completedMissions
                         </div>
                     ))}
                 </div>
+                <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
             </div>
         </Layout >
     )

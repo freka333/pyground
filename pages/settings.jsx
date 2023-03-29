@@ -11,11 +11,21 @@ import { useState } from "react";
 import { Stack } from "@mui/system";
 import NameDialog from "../components/NameDialog";
 import DeleteUserDialog from "../components/DeleteUserDialog";
+import CopyrightButton from "../components/CopyrightButton";
 
 export default function Settings({ userInfo, characters, email }) {
     const [openCharacterDialog, setOpenCharacterDialog] = useState(false);
     const [openNameDialog, setOpenNameDialog] = useState(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [openExternalDialog, setOpenExternalDialog] = useState(false);
+
+    const handleOpenExternalDialog = () => {
+        setOpenExternalDialog(true);
+    };
+
+    const handleCloseExternalDialog = () => {
+        setOpenExternalDialog(false);
+    };
 
     const handleOpenCharacters = () => {
         setOpenCharacterDialog(true);
@@ -78,6 +88,10 @@ export default function Settings({ userInfo, characters, email }) {
                         </Grid>
                     </Grid>
                 </Card>
+
+                <div style={{ position: 'absolute', bottom: 0, right: 0 }} >
+                    <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
+                </div>
             </div>
         </Layout>
     )

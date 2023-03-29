@@ -66,6 +66,15 @@ const theme = createTheme({
             color: '#20013F',
             borderRadius: '5%',
             padding: '10px'
+        },
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#ebe6ef',
+                    color: '#20013F',
+                }
+            }
+
         }
     },
     shape: {

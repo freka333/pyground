@@ -9,9 +9,9 @@ h5 {
     margin: auto;
 }
 
-.MuiMenu-root ul {
-    background-color: #ebe6ef;
-    color: #20013F;
+body #nprogress .bar {
+    background-color: #80FF9C;
+    height: 4px;
 }
 
 .mainPage {
