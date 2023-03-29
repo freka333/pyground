@@ -9,12 +9,13 @@ import LessonContent from "../../components/LessonContent";
 import ExerciseContent from "../../components/ExerciseContent";
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
+import TaskNotFound from "../../components/TaskNotFound";
 
 export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters, missionIdList, defaultCode }) {
     const router = useRouter();
 
     if (hasError) {
-        return <h1>Error</h1>
+        return <TaskNotFound user={userInfo} characters={characters} />
     }
 
     if (router.isFallback) {
@@ -62,9 +63,11 @@ export const getServerSideProps = async (context) => {
         foundTask = mission.tasks.find(item => item.path === context.params?.task);
     }
 
+    console.log("name:", userInfo.nickname)
+
     if (!foundTask || !userInfo.completedTasks.find(task => task.task.toString() === foundTask._id.toString())) {
         return {
-            props: { hasError: true }
+            props: { hasError: true, userInfo: JSON.parse(JSON.stringify(userInfo)), characters }
         }
     }
 
