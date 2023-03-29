@@ -24,13 +24,13 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
         router.replace(router.asPath);
     }
 
-    const [value, setValue] = useState(defaultCode);
+    const [editorValue, setEditorValue] = useState(defaultCode);
     const [result, setResult] = useState(null);
 
     const nextTask = findTaskIndex(mission, task);
 
     const handleEditorChange = (value) => {
-        setValue(value);
+        setEditorValue(value);
     };
 
     const handleRunClick = async () => {
@@ -39,10 +39,9 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ code: value, correctAnswer: task.correctAnswer, defaultCode: task.defaultCode }),
+            body: JSON.stringify({ code: editorValue, correctAnswer: task.correctAnswer, defaultCode: task.defaultCode }),
         });
         const result = await response.json();
-        console.log("result:", result.state)
 
         if (task.state === "started" && result.state === "completed") {
             console.log('yes')
@@ -80,6 +79,10 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
         else if (!nextTask) {
             setOpenMissionComplete(true);
         }
+    }
+
+    const handleResetCode = () => {
+        setEditorValue(defaultCode);
     }
 
     useEffect(() => {
@@ -122,10 +125,10 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                                 <Typography color='#ede5f4'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" endIcon={<PlayCircle />} sx={{ borderRadius: '15px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} onClick={handleRunClick}>
+                                <Button variant="contained" onClick={handleRunClick} endIcon={<PlayCircle />} sx={{ borderRadius: '15px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }}>
                                     Futtatás
                                 </Button>
-                                <Button variant="contained" endIcon={<RestartAlt />} sx={{ borderRadius: '15px', margin: '5px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} >
+                                <Button variant="contained" onClick={handleResetCode} endIcon={<RestartAlt />} sx={{ borderRadius: '15px', margin: '5px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} >
                                     Kód alaphelyzetbe állítása
                                 </Button>
                             </Grid>
@@ -133,7 +136,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                         <Editor
                             height='100%'
                             language={'python'}
-                            value={value}
+                            value={editorValue}
                             theme={theme}
                             onChange={handleEditorChange}
                             onMount={editor => { editorRef.current = editor }}
