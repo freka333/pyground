@@ -11,6 +11,12 @@ const MissionSchema = new mongoose.Schema({
         kind: String,
         title: String,
         description: String,
+        defaultCode: String,
+        correctAnswer: [{
+            type: String,
+            value: String
+        }],
+        point: Number,
     }],
 })
 

@@ -10,7 +10,7 @@ import ExerciseContent from "../../components/ExerciseContent";
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 
-export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters, missionIdList }) {
+export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters, missionIdList, defaultCode }) {
     const router = useRouter();
 
     if (hasError) {
@@ -26,7 +26,7 @@ export default function ProjectPage({ foundMission, foundTask, hasError, userInf
             {
                 foundTask.kind === "lesson"
                     ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
-                    : <ExerciseContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
+                    : <ExerciseContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} defaultCode={defaultCode} />
             }
         </Layout>
     )
@@ -89,12 +89,14 @@ export const getServerSideProps = async (context) => {
         })
     })
 
+    const defaultCode = foundTask.defaultCode || null;
+
     const processedContent = await remark()
         .use(remarkHtml)
         .process(foundTask.description);
     foundTask.description = processedContent.toString();
 
     return {
-        props: { foundMission: mission, foundTask, userInfo: JSON.parse(JSON.stringify(userInfo)), characters, missionIdList }
+        props: { foundMission: mission, foundTask, userInfo: JSON.parse(JSON.stringify(userInfo)), characters, missionIdList, defaultCode }
     }
 }

@@ -15,7 +15,7 @@ const findTaskIndex = (mission, task) => {
     return mission.tasks[index + 1]
 }
 
-export default function ExerciseContent({ user, mission, task, missionIdList }) {
+export default function ExerciseContent({ user, mission, task, missionIdList, defaultCode }) {
     const editorRef = useRef(null);
     const router = useRouter();
     const [openMissionComplete, setOpenMissionComplete] = useState(false);
@@ -24,7 +24,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
         router.replace(router.asPath);
     }
 
-    const [value, setValue] = useState('print("Python!")');
+    const [value, setValue] = useState(defaultCode);
     const [result, setResult] = useState(null);
 
     const nextTask = findTaskIndex(mission, task);
@@ -39,16 +39,18 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ code: value }),
+            body: JSON.stringify({ code: value, correctAnswer: task.correctAnswer, defaultCode: task.defaultCode }),
         });
         const result = await response.json();
+        console.log("result:", result.state)
 
-        if (task.state === "started") {
+        if (task.state === "started" && result.state === "completed") {
+            console.log('yes')
             const data = {
                 id: user.id,
                 taskId: task._id,
                 missionId: mission._id,
-                point: 10,
+                point: task.point,
             }
             const responseTaskCompleted = await fetch('/api/user/taskCompleted', {
                 method: 'POST',
@@ -62,7 +64,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList }) 
                 refreshData();
             }
         }
-        setResult(result);
+        setResult(result.value);
     }
 
     const handleGivenTask = (taskPath) => {

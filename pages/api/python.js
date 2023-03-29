@@ -3,26 +3,52 @@ import { PythonShell } from 'python-shell';
 export default async function handler(req, res) {
 
     switch (req.method) {
-        case 'GET': {
-            const pyCode = await PythonShell.runString("x=1+1;print(x)", null);
-            //const pyCode = await PythonShell.run("pythonApp.py", null)
-            //const pyCode = await PythonShell.runString(req.body, null);
-            res.status(200).json(pyCode);
-            break
-        }
         case 'POST': {
-            let pyCode;
+            const result = {};
             try {
-                pyCode = await PythonShell.runString(req.body.code, null);
+                result.value = await PythonShell.runString(req.body.code, null);
+                result.stringValue = result.value.toString();
+                result.completed = 0;
+
+                for (const answer of req.body.correctAnswer) {
+                    switch (answer.type) {
+                        case 'exact-match':
+                            if (result.stringValue === answer.value) {
+                                result.completed++;
+                            }
+                            break;
+                        case 'n-output':
+                            if (result.value.length === Number(answer.value)) {
+                                result.completed++;
+                            }
+                            break;
+                        case 'output-type':
+                            if (answer.value === "number") {
+                                if (!isNaN(Number(result.value[0]))) {
+                                    result.completed++;
+                                }
+                            }
+                            break;
+                        case 'different-code':
+                            if (req.body.code !== req.body.defaultCode) {
+                                result.completed++;
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                result.state = result.completed === req.body.correctAnswer.length ? "completed" : "failed";
+
             }
             catch (error) {
-                pyCode = [error.toString()];
+                result.value = [error.toString()];
             }
-            res.status(200).json(pyCode);
+            res.status(200).json(result);
             break
         }
         default:
-            res.status(405).send({ message: 'Only GET requests allowed' })
+            res.status(405).send({ message: 'Only POST requests allowed' })
             break
     }
 }
