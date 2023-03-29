@@ -43,6 +43,11 @@ export default async function handler(req, res) {
             }
             catch (error) {
                 result.value = [error.toString()];
+                if (result.value[0].includes("File ")) {
+                    const start = result.value[0].indexOf("File");
+                    const end = result.value[0].indexOf('.py",');
+                    result.value[0] = result.value[0].substring(0, start).trim() + result.value[0].substring(end + 5);
+                }
             }
             res.status(200).json(result);
             break
