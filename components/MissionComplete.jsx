@@ -16,7 +16,7 @@ export default function MissionComplete({ open, island, missionIdList }) {
             <DialogTitle color='360c61' textAlign='center'>Gratulálok!</DialogTitle>
             <DialogContent>
                 <DialogContentText color='360c61'>
-                    {island.num < missionIdList.length ? `Végeztél a ${island.title} sziget minden feladatával, így feloldottál egy új jutalmat, és egy új szigetet!` : "Minden feladatot teljesítettél, ezért megkaptad a legsikeresebbeknek járó jutalmat! Szép munka!"}
+                    {island.num < missionIdList.length ? `Végeztél a ${island.title} minden feladatával, így feloldottál egy új jutalmat, és egy új szigetet!` : "Minden feladatot teljesítettél, ezért megkaptad a legsikeresebbeknek járó jutalmat! Szép munka!"}
                 </DialogContentText>
                 <img src={island.badge_img} alt={island.title} width='120px' style={{ display: 'flex', margin: 'auto' }} />
                 <DialogActions sx={{ justifyContent: 'center', marginTop: '10px' }}>

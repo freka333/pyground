@@ -48,11 +48,13 @@ export const getServerSideProps = async (context) => {
     const missionsResult = await Mission.find({}).lean();
 
     missionsResult.forEach(mission => {
-        mission._id = mission._id.toString();
-        missionIdList.push({
-            id: mission._id,
-            num: mission.num
-        });
+        if (!mission.disabled) {
+            mission._id = mission._id.toString();
+            missionIdList.push({
+                id: mission._id,
+                num: mission.num
+            });
+        }
     })
     missionIdList.sort((a, b) => a.num - b.num);
 

@@ -18,6 +18,7 @@ const MissionSchema = new mongoose.Schema({
         }],
         point: Number,
     }],
+    disabled: Boolean,
 })
 
 export default mongoose.models.Mission || mongoose.model('Mission', MissionSchema)

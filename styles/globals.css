@@ -66,33 +66,3 @@ blockquote>p {
     width: 20px;
     background-color: #999;
 }
-
-#Island1 {
-    justify-self: start;
-    align-self: end;
-}
-
-#Island2 {
-    justify-self: start;
-    align-self: center;
-}
-
-#Island3 {
-    justify-self: start;
-    align-self: end;
-}
-
-#Island4 {
-    justify-self: end;
-    align-self: end;
-}
-
-#Island5 {
-    justify-self: end;
-    align-self: start;
-}
-
-#Island6 {
-    justify-self: center;
-    align-self: end;
-}

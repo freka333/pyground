@@ -53,11 +53,11 @@ export default function Home({ userInfo, missions, characters, completedMissions
     return (
         <Layout user={userInfo} characters={characters}>
             <div className="mainPage" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', overflow: 'auto', paddingTop: '10px' }} >
-                <div style={{ display: 'grid', gridTemplateColumns: '350px 350px 350px', gridTemplateRows: '300px 300px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '150px', gridRowGap: '30px' }}>
 
                     {missions.map((mission) => (
-                        <div key={mission.title} id={mission.title} >
-                            <Button key={mission.title} disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, mission._id)}>
+                        <div key={mission.title}>
+                            <Button disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, mission._id)}>
                                 <img
                                     src={mission.image}
                                     alt={mission.title}
@@ -91,7 +91,7 @@ export const getServerSideProps = async (context) => {
     const info = await initInfo(session.user);
     const { userInfo, characters } = info;
 
-    const missionsResult = await Mission.find({}).lean();
+    const missionsResult = await Mission.find({ disabled: false }).lean();
 
     missionsResult.forEach(mission => {
         mission._id = mission._id.toString();

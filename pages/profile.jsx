@@ -39,8 +39,8 @@ export default function Profile({ userInfo, missions, characters }) {
                         {missions.map((item) => (
                             <Tooltip key={item._id} placement='top-start' arrow title={
                                 !userInfo.badges?.includes(item._id.toString())
-                                    ? `Ezért a jutalomért látogass el a ${item.title} szigetre`
-                                    : `Gratulálok! Megszerezted a ${item.title} sziget jutalmát!`
+                                    ? `Ezért a jutalomért látogass el a ${item.title}re`
+                                    : `Gratulálok! Megszerezted a ${item.title} jutalmát!`
                             }>
                                 <ListItem key={item.title}>
                                     <img
@@ -72,7 +72,7 @@ export const getServerSideProps = async (context) => {
     const info = await initInfo(session.user);
     const { userInfo, characters } = info;
 
-    const missionsResult = await Mission.find({})
+    const missionsResult = await Mission.find({ disabled: false })
 
     const missions = missionsResult.map((doc) => {
         const mission = doc.toObject();
