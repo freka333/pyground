@@ -26,7 +26,7 @@ export default function ProjectPage({ foundMission, foundTask, hasError, userInf
             {
                 foundTask.kind === "lesson"
                     ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
-                    : <ExerciseContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} defaultCode={defaultCode} />
+                    : <ExerciseContent key={foundTask._id} user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} defaultCode={defaultCode} />
             }
         </Layout>
     )
@@ -62,7 +62,7 @@ export const getServerSideProps = async (context) => {
         foundTask = mission.tasks.find(item => item.path === context.params?.task);
     }
 
-    if (!foundTask) {
+    if (!foundTask || !userInfo.completedTasks.find(task => task.task.toString() === foundTask._id.toString())) {
         return {
             props: { hasError: true }
         }
