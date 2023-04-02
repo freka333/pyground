@@ -18,11 +18,11 @@ export default function DeleteUserDialog({ open, handleClose }) {
     }
 
     return (
-        <Dialog open={open} maxWidth="sm" PaperProps={{ sx: { padding: '5px', bgcolor: '#f1eef3' } }} >
+        <Dialog open={open} maxWidth='sm' >
             <DialogTitle textAlign='center' fontSize='24px'>Biztos vagy benne, hogy törlöd a fiókod minden adatoddal együtt?</DialogTitle>
             <DialogActions sx={{ justifyContent: 'center' }}>
-                <Button variant="contained" onClick={handleDelete} sx={{ backgroundColor: '#bb0005', color: '#f3ecec', ':hover': { backgroundColor: '#e2060c' } }}>Törlés</Button>
-                <Button variant="contained" onClick={handleClose} sx={{ backgroundColor: '#8d76a1', color: '#eeedf0', ':hover': { backgroundColor: '#7b6b89' } }}>Mégse</Button>
+                <Button variant='contained' onClick={handleDelete} sx={{ backgroundColor: 'red.main', color: 'lightPurpleGrey.light', ':hover': { backgroundColor: 'red.dark' } }}>Törlés</Button>
+                <Button variant='contained' onClick={handleClose} sx={{ backgroundColor: 'grey.main', color: 'lightPurpleGrey.light', ':hover': { backgroundColor: 'grey.dark' } }}>Mégse</Button>
             </DialogActions>
         </Dialog>
     )

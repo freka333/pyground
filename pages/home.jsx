@@ -9,6 +9,7 @@ import MissionPopover from "@/components/MissionPopover";
 import initInfo from "@/lib/initInfo";
 import { makeStyles } from "@mui/styles";
 import CopyrightButton from "../components/CopyrightButton";
+import ContainerBox from "../components/ContainerBox";
 
 const useStyles = makeStyles(theme => ({
     island: {
@@ -52,16 +53,14 @@ export default function Home({ userInfo, missions, characters, completedMissions
 
     return (
         <Layout user={userInfo} characters={characters}>
-            <div className="mainPage" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', overflow: 'auto', paddingTop: '10px' }} >
+            <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-evenly' paddingTop='10px' >
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '150px', gridRowGap: '30px' }}>
-
                     {missions.map((mission) => (
                         <div key={mission.title}>
                             <Button disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, mission._id)}>
                                 <img
                                     src={mission.image}
                                     alt={mission.title}
-                                    loading="lazy"
                                     width='220px'
                                     style={{
                                         filter: !completedMissions?.includes(mission._id) ? 'grayscale(100%)' : 'none',
@@ -69,13 +68,13 @@ export default function Home({ userInfo, missions, characters, completedMissions
                                     }}
                                 />
                             </Button>
-                            <Typography textAlign='center' color='#20013F' fontSize='20px'>{mission.title}</Typography>
+                            <Typography textAlign='center' color='primary.dark' fontSize='20px'>{mission.title}</Typography>
                             <MissionPopover mission={mission} completedMissions={completedMissions} openedPopoverId={openedPopoverId} handlePopoverClose={handlePopoverClose} anchorEl={anchorElement} />
                         </div>
                     ))}
                 </div>
                 <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
-            </div>
+            </ContainerBox>
         </Layout >
     )
 }

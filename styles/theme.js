@@ -15,12 +15,12 @@ const theme = createTheme({
     palette: {
         primary: {
             main: '#5a1d96',
-            light: '#8f44b3',
+            light: '#bb95ce',
             dark: '#360c61'
         },
         secondary: {
             main: '#33A16A',
-            light: '#1cba4f',
+            light: '#5eb88b',
             dark: '#2A8457'
         },
         text: {
@@ -29,15 +29,38 @@ const theme = createTheme({
         error: {
             main: '#ff0000'
         },
-        greyIcon: {
-            main: '#807d82'
+        grey: {
+            main: '#807d82',
+            dark: '#635e66',
+            light: '#aba6ad'
         },
-        redIcon: {
-            main: '#961212'
+        purpleGrey: {
+            dark: '#534660'
+        },
+        lightPurpleGrey: {
+            main: '#eeeaf2',
+            dark: '#bfb2cc',
+            light: '#f8f6fa'
+        },
+        lightGreen: {
+            main: '#9bd4b7',
+            light: '#e4ede8'
+        },
+        red: {
+            main: '#aa3d3d',
+            dark: '#942b2b',
+            light: '#c75858'
+        },
+        codeEditor: {
+            main: '#2A173D',
+            dark: '#011627'
         }
     },
     typography: {
         fontFamily: roboto.style.fontFamily,
+    },
+    shape: {
+        borderRadius: 12
     },
     components: {
         MuiToolbar: {
@@ -51,13 +74,13 @@ const theme = createTheme({
         MuiTooltip: {
             styleOverrides: {
                 tooltip: {
-                    fontSize: '15px',
-                    backgroundColor: '#594969',
+                    fontSize: '16px',
+                    backgroundColor: '#412d54',
                     color: '#fdfcff',
                     margin: '0'
                 },
                 arrow: {
-                    color: '#594969'
+                    color: '#412d54'
                 }
             }
         },
@@ -72,13 +95,11 @@ const theme = createTheme({
                 root: {
                     backgroundColor: '#ebe6ef',
                     color: '#20013F',
+                    padding: '5px'
                 }
             }
 
         }
-    },
-    shape: {
-        borderRadius: 12
     },
 });
 

@@ -1,14 +1,24 @@
 import Editor, { loader } from "@monaco-editor/react";
 import { Box, Button, Grid, Typography } from "@mui/material"
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack"
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import themeData from "monaco-themes/themes/Night Owl.json";
-import PlayCircle from '@mui/icons-material/PlayCircle';
-import RestartAlt from '@mui/icons-material/RestartAlt';
+import PlayCircle from "@mui/icons-material/PlayCircle";
+import RestartAlt from "@mui/icons-material/RestartAlt";
 import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
+import { styled } from "@mui/system";
+
+const CustomButton = styled(Button)(({ theme }) => ({
+    margin: '5px 5px 0 0',
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.lightGreen.light,
+    ':hover': {
+        backgroundColor: theme.palette.secondary.dark
+    }
+}))
 
 const findTaskIndex = (mission, task) => {
     const index = mission.tasks.findIndex(t => t._id === task._id)
@@ -43,7 +53,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
         });
         const result = await response.json();
 
-        if (task.state === "started" && result.state === "completed") {
+        if (task.state === 'started' && result.state === 'completed') {
             const data = {
                 id: user.id,
                 taskId: task._id,
@@ -72,7 +82,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
     const handleNextTask = () => {
         const index = mission.tasks.findIndex(t => t._id === task._id)
         const nextTask = mission.tasks[index + 1]
-        if (nextTask && nextTask.state !== "locked") {
+        if (nextTask && nextTask.state !== 'locked') {
             router.push(`/${mission.title}/${nextTask.path}`)
         }
         else if (!nextTask) {
@@ -97,20 +107,20 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
         const onResize = () => {
             editorRef.current.layout({});
         }
-        window.addEventListener("resize", onResize)
+        window.addEventListener('resize', onResize)
         return () => {
-            window.removeEventListener("resize", onResize);
+            window.removeEventListener('resize', onResize);
         }
     }, [])
 
     return (
         <>
-            <Grid container backgroundColor='#bfb2cc' padding='10px' height='100%' overflow='hidden' >
+            <Grid container backgroundColor='lightPurpleGrey.dark' padding='10px' height='100%' overflow='hidden' >
                 <Grid item xs={4} display='grid' height='100%'>
-                    <Box borderRadius='15px' sx={{ backgroundColor: '#f0ebf6' }} marginRight='10px' display='flex' flexDirection='column' overflow='hidden' >
-                        <Box backgroundColor='#534660' borderRadius='15px 15px 0 0' padding='5px' color='#ede5f4'>
-                            <Typography fontSize='15px' align="center">{mission.title}</Typography>
-                            <Typography fontSize='20px' align="center">{task.title}</Typography>
+                    <Box borderRadius='15px' sx={{ backgroundColor: 'lightPurpleGrey.main' }} marginRight='10px' display='flex' flexDirection='column' overflow='hidden' >
+                        <Box backgroundColor='purpleGrey.dark' borderRadius='15px 15px 0 0' padding='5px' color='lightPurpleGrey.light'>
+                            <Typography fontSize='15px' align='center'>{mission.title}</Typography>
+                            <Typography fontSize='20px' align='center'>{task.title}</Typography>
                         </Box>
                         <Box padding='10px' overflow='auto'>
                             <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
@@ -119,17 +129,17 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                 </Grid>
                 <Grid item xs={8} height='100%' display='flex' flexDirection='column'>
                     <Stack height='60%'>
-                        <Grid container backgroundColor='#011627' borderRadius='20px 15px 0 0' justifyContent='space-between' paddingBottom='7px'>
-                            <Grid item backgroundColor='#534660' borderRadius='20px 0' padding='10px' >
-                                <Typography color='#ede5f4'>Kódszerkesztő</Typography>
+                        <Grid container backgroundColor='codeEditor.dark' borderRadius='20px 15px 0 0' justifyContent='space-between' paddingBottom='7px'>
+                            <Grid item backgroundColor='purpleGrey.dark' borderRadius='20px 0' padding='10px' >
+                                <Typography color='lightPurpleGrey.light'>Kódszerkesztő</Typography>
                             </Grid>
                             <Grid item>
-                                <Button variant="contained" onClick={handleRunClick} endIcon={<PlayCircle />} sx={{ borderRadius: '15px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }}>
+                                <CustomButton variant='contained' onClick={handleRunClick} endIcon={<PlayCircle />}>
                                     Futtatás
-                                </Button>
-                                <Button variant="contained" onClick={handleResetCode} endIcon={<RestartAlt />} sx={{ borderRadius: '15px', margin: '5px', backgroundColor: 'secondary.main', color: '#ebf3ef', ':hover': { backgroundColor: '#34cd75' } }} >
+                                </CustomButton>
+                                <CustomButton variant='contained' onClick={handleResetCode} endIcon={<RestartAlt />} >
                                     Kód alaphelyzetbe állítása
-                                </Button>
+                                </CustomButton>
                             </Grid>
                         </Grid>
                         <Editor
@@ -142,14 +152,14 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                             options={{ minimap: { enabled: false } }}
                         />
                     </Stack>
-                    <Box backgroundColor='#2A173D' height='40%' padding='10px' color='white' overflow='auto'>
+                    <Box backgroundColor='codeEditor.main' height='40%' padding='10px' overflow='auto'>
                         {result?.map((line, i) => (
-                            <Typography key={i} color='white' whiteSpace='pre' fontFamily='monospace'>{line}</Typography>
+                            <Typography key={i} color='lightPurpleGrey.light' whiteSpace='pre' fontFamily='monospace'>{line}</Typography>
                         ))}
                     </Box>
-                    <Box backgroundColor='#2A173D' borderRadius='0 0 20px 20px' display='flex' justifyContent='flex-end'>
-                        <Box backgroundColor='#7b5f96' borderRadius='20px 0px' padding='10px'  >
-                            <Typography color='#ede5f4'>Terminal</Typography>
+                    <Box backgroundColor='codeEditor.main' borderRadius='0 0 20px 20px' display='flex' justifyContent='flex-end'>
+                        <Box backgroundColor='purpleGrey.dark' borderRadius='20px 0px' padding='10px'  >
+                            <Typography color='lightPurpleGrey.light'>Terminal</Typography>
                         </Box>
                     </Box>
                 </Grid>

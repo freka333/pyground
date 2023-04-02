@@ -1,49 +1,49 @@
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ListItemText, Typography } from "@mui/material";
-import Button from '@mui/material/Button';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+import Button from "@mui/material/Button";
 import { useState } from "react";
 import NameDialog from "./NameDialog";
-import CharacterDialog from './CharacterDialog';
+import CharacterDialog from "./CharacterDialog";
 
 function initDialog(name, character) {
     if (!name && !character) {
-        return "intro";
+        return 'intro';
     }
     else if (!name) {
-        return "nickname";
+        return 'nickname';
     }
     else if (!character) {
-        return "characters";
+        return 'characters';
     }
-    return "";
+    return '';
 }
 
 export default function WelcomeDialog2({ user, characters }) {
     const [selectedDialog, setSelectedDialog] = useState(() => initDialog(user.nickname, user.userCharacter));
 
     const handleSelectedDialog = () => {
-        let dialog = "";
-        if (selectedDialog === "intro") {
+        let dialog = '';
+        if (selectedDialog === 'intro') {
             if (!user.userCharacter) {
-                dialog = "characters";
+                dialog = 'characters';
             }
             else if (!user.nickname) {
-                dialog = "nickname";
+                dialog = 'nickname';
             }
         }
-        else if (selectedDialog === "characters") {
+        else if (selectedDialog === 'characters') {
             if (!user.nickname) {
-                dialog = "nickname";
+                dialog = 'nickname';
             }
             else {
-                dialog = "guide";
+                dialog = 'guide';
             }
         }
-        else if (selectedDialog === "nickname") {
+        else if (selectedDialog === 'nickname') {
             if (!user.userCharacter) {
-                dialog = "characters";
+                dialog = 'characters';
             }
             else {
-                dialog = "guide";
+                dialog = 'guide';
             }
         }
         setSelectedDialog(dialog);
@@ -51,8 +51,8 @@ export default function WelcomeDialog2({ user, characters }) {
 
     return (
         <>
-            {selectedDialog === "intro" &&
-                <Dialog open transitionDuration={0} PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+            {selectedDialog === 'intro' &&
+                <Dialog open transitionDuration={0}>
                     <DialogTitle>Üdvözöllek a PyGround világában!</DialogTitle>
                     <DialogContent>
                         <Typography>
@@ -60,7 +60,7 @@ export default function WelcomeDialog2({ user, characters }) {
                         </Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={handleSelectedDialog}>Tovább</Button>
+                        <Button variant='contained' onClick={handleSelectedDialog}>Tovább</Button>
                     </DialogActions>
                 </Dialog>
             }
@@ -70,8 +70,8 @@ export default function WelcomeDialog2({ user, characters }) {
             {selectedDialog === 'nickname' &&
                 <NameDialog open user={user} handleClose={handleSelectedDialog} />
             }
-            {selectedDialog === "guide" &&
-                <Dialog open transitionDuration={0} PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+            {selectedDialog === 'guide' &&
+                <Dialog open transitionDuration={0} >
                     <DialogTitle>Szia, {user.nickname}!</DialogTitle>
                     <DialogContent>
                         <Typography>
@@ -85,7 +85,7 @@ export default function WelcomeDialog2({ user, characters }) {
                         </Typography>
                     </DialogContent>
                     <DialogActions>
-                        <Button variant="contained" onClick={handleSelectedDialog}>Kalandra fel!</Button>
+                        <Button variant='contained' onClick={handleSelectedDialog}>Kalandra fel!</Button>
                     </DialogActions>
                 </Dialog>
             }

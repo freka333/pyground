@@ -48,17 +48,16 @@ export default function NameDialog({ open, user, handleClose }) {
     }
 
     return (
-        <Dialog open={open} transitionDuration={0} maxWidth='xs' fullWidth PaperProps={{ style: { backgroundColor: '#f5f1f7' } }}>
+        <Dialog open={open} transitionDuration={0} maxWidth='xs' fullWidth >
             <DialogTitle>
                 Válassz egy nevet a karakterednek!
             </DialogTitle>
             <DialogContent>
                 <TextField
-                    margin="dense"
-                    id="name"
-                    label="Név"
+                    margin='dense'
+                    label='Név'
                     fullWidth
-                    variant="standard"
+                    variant='standard'
                     value={name}
                     onChange={(e) => handleSetName(e.target.value)}
                 />
@@ -69,7 +68,7 @@ export default function NameDialog({ open, user, handleClose }) {
                 }
             </DialogContent>
             <DialogActions>
-                <Button disabled={!name} variant="contained" onClick={handleNickname}>Mentés</Button>
+                <Button disabled={!name} variant='contained' onClick={handleNickname}>Mentés</Button>
             </DialogActions>
         </Dialog>
     )

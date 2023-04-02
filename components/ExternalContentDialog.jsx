@@ -3,7 +3,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 export default function ExternalContentDialog({ open, handleClose }) {
     return (
         <Dialog open={open}>
-            <DialogTitle>Az oldalon található képek és ikonok forrása:</DialogTitle>
+            <DialogTitle> Az oldalon található képek és ikonok forrása: </DialogTitle>
             <DialogContent>
                 <DialogContentText><a href="https://www.freepik.com/free-vector/isometric-colorful-game-islands-set_9587373.htm#&position=13&from_view=undefined">Image by macrovector</a> on Freepik</DialogContentText>
                 <DialogContentText><a href="https://www.freepik.com/free-vector/gaming-islands-with-stones-isometric-set_9457352.htm#&position=15&from_view=undefined">Image by macrovector</a> on Freepik</DialogContentText>
@@ -18,7 +18,7 @@ export default function ExternalContentDialog({ open, handleClose }) {
                 <DialogContentText><a href="https://www.flaticon.com/free-icons/writer" title="writer icons">Writer icons created by SeyfDesigner - Flaticon</a></DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={handleClose}>Bezárás</Button>
+                <Button variant='contained' onClick={handleClose}>Bezárás</Button>
             </DialogActions>
         </Dialog>
     )

@@ -1,12 +1,13 @@
 import Layout from "@/components/Layout";
 import initInfo from "@/lib/initInfo";
 import dbConnect from "@/lib/mongoose";
-import { Card, CardMedia, CardContent, Box, Stack, Typography, List, ListItem, Tooltip } from '@mui/material';
+import { Card, CardMedia, CardContent, Box, Stack, Typography, List, ListItem, Tooltip } from "@mui/material";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Mission from "@/models/Mission";
 import CopyrightButton from "../components/CopyrightButton";
 import { useState } from "react";
+import ContainerBox from "../components/ContainerBox";
 
 export default function Profile({ userInfo, missions, characters }) {
     const [openExternalDialog, setOpenExternalDialog] = useState(false);
@@ -21,21 +22,21 @@ export default function Profile({ userInfo, missions, characters }) {
 
     return (
         <Layout user={userInfo} characters={characters}>
-            <div className="mainPage" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-evenly', overflow: 'auto', paddingTop: '10px' }} >
+            <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-evenly' paddingTop='10px' >
                 <Card sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <CardMedia image={userInfo.characterImg} component="img" height='90%' sx={{ margin: '10px' }} />
+                    <CardMedia image={userInfo.characterImg} component='img' height='90%' sx={{ margin: '10px' }} />
                     <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <Typography fontSize='40px'>{userInfo.nickname}</Typography>
                         <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
                         <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '10px', }}>
-                            <img alt="Diamond" src="/images/diamond.png" width='60px' style={{ marginRight: '10px' }} />
+                            <img alt='Diamond' src='/images/diamond.png' width='60px' style={{ marginRight: '10px' }} />
                             <Typography fontSize='25px'>{userInfo.xp}</Typography>
                         </Box>
                     </CardContent>
                 </Card>
                 <>
-                    <Typography fontSize='30px' color='#20013F' textAlign='center' marginTop='10px'>Megszerzett jutalmak</Typography>
-                    <List component={Stack} direction="row">
+                    <Typography fontSize='30px' textAlign='center' marginTop='10px'>Megszerzett jutalmaid</Typography>
+                    <List component={Stack} direction='row'>
                         {missions.map((item) => (
                             <Tooltip key={item._id} placement='top-start' arrow title={
                                 !userInfo.badges?.includes(item._id.toString())
@@ -46,7 +47,6 @@ export default function Profile({ userInfo, missions, characters }) {
                                     <img
                                         src={item.badge_img}
                                         alt={item.badge_name}
-                                        loading="lazy"
                                         width='150px'
                                         style={{ filter: !userInfo.badges?.includes(item._id.toString()) ? 'grayscale(1) contrast(0.1) brightness(0.8)' : 'none' }}
                                     />
@@ -56,7 +56,7 @@ export default function Profile({ userInfo, missions, characters }) {
                     </List>
                 </>
                 <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
-            </div>
+            </ContainerBox>
         </Layout >
     )
 }

@@ -14,13 +14,6 @@ body #nprogress .bar {
     height: 4px;
 }
 
-.mainPage {
-    background-color: #9bd4b7;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-}
-
 blockquote,
 pre {
     background-color: #dad1e4;

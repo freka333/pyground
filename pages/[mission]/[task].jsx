@@ -7,25 +7,20 @@ import { authOptions } from "../api/auth/[...nextauth]";
 import initInfo from "@/lib/initInfo";
 import LessonContent from "../../components/LessonContent";
 import ExerciseContent from "../../components/ExerciseContent";
-import { remark } from 'remark';
-import remarkHtml from 'remark-html';
+import { remark } from "remark";
+import remarkHtml from "remark-html";
 import TaskNotFound from "../../components/TaskNotFound";
 
 export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters, missionIdList, defaultCode }) {
-    const router = useRouter();
 
     if (hasError) {
         return <TaskNotFound user={userInfo} characters={characters} />
     }
 
-    if (router.isFallback) {
-        return <h1>Loading...</h1>
-    }
-
     return (
         <Layout user={userInfo} characters={characters}>
             {
-                foundTask.kind === "lesson"
+                foundTask.kind === 'lesson'
                     ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
                     : <ExerciseContent key={foundTask._id} user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} defaultCode={defaultCode} />
             }
@@ -74,18 +69,18 @@ export const getServerSideProps = async (context) => {
     mission.tasks.forEach((task) => {
         task._id = task._id.toString();
         userInfo.completedTasks.forEach(completedTask => {
-            if (!task.state || task.state === "locked") {
+            if (!task.state || task.state === 'locked') {
                 if (task._id === completedTask.task.toString()) {
                     if (completedTask.completed) {
-                        task.state = "completed";
+                        task.state = 'completed';
                     }
                     else {
-                        task.state = "started";
+                        task.state = 'started';
                     }
 
                 }
                 else {
-                    task.state = "locked"
+                    task.state = 'locked'
                 }
 
             }

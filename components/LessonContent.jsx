@@ -1,10 +1,10 @@
 import { Paper, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import FirstCompletedDialog from "./FirstCompletedDialog";
 import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
+import ContainerBox from "./ContainerBox";
 
 const findTaskIndex = (mission, task) => {
     const index = mission.tasks.findIndex(t => t._id === task._id)
@@ -27,7 +27,7 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
     }
 
     const handleNextTask = async () => {
-        if (task.state === "started") {
+        if (task.state === 'started') {
             const data = {
                 id: user.id,
                 taskId: task._id,
@@ -59,12 +59,12 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
 
     return (
         <>
-            <Box className="mainPage" display='grid' overflow='auto' >
-                <Paper sx={{ width: '70%', borderRadius: 0, padding: '20px', backgroundColor: '#EBE1F6', marginLeft: 'auto', marginRight: 'auto' }}>
+            <ContainerBox display='grid'>
+                <Paper sx={{ width: '70%', borderRadius: 0, padding: '20px', backgroundColor: 'lightPurpleGrey.main', marginLeft: 'auto', marginRight: 'auto' }}>
                     <Typography variant='h4'>{task.title}</Typography>
                     <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                 </Paper>
-            </Box>
+            </ContainerBox>
             <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
             <FirstCompletedDialog open={openFirstDialog} handleClick={openNextTask} />

@@ -2,16 +2,16 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from 
 
 export default function FirstCompletedDialog({ open, handleClick }) {
     return (
-        <Dialog open={open} fullWidth maxWidth="sm" PaperProps={{ sx: { padding: '5px', bgcolor: '#f1eef3' } }} >
+        <Dialog open={open} fullWidth maxWidth='sm' >
             <DialogContent sx={{ padding: '15px' }}>
-                <DialogContentText color='360c61' textAlign='center' fontSize='18px'>
+                <DialogContentText textAlign='center' fontSize='18px' color='text.primary'>
                     Az első akadályt sikeresen elhárítottad, ezért kaptál 10 gyémántot!
                     Csak így tovább!
                 </DialogContentText>
-                <img src="/images/diamond.png" alt="diamond" width='60px' style={{ display: 'flex', margin: 'auto' }} />
+                <img src='/images/diamond.png' alt='diamond' width='60px' style={{ display: 'flex', margin: 'auto' }} />
             </DialogContent>
             <DialogActions sx={{ justifyContent: 'center', marginBottom: '15px' }}>
-                <Button variant="contained" onClick={handleClick} >
+                <Button variant='contained' onClick={handleClick} >
                     Lássuk a következő feladatot!
                 </Button>
             </DialogActions>
