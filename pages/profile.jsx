@@ -23,15 +23,28 @@ export default function Profile({ userInfo, missions, characters }) {
     return (
         <Layout user={userInfo} characters={characters}>
             <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-evenly' paddingTop='10px' >
-                <Card sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <CardMedia image={userInfo.characterImg} component='img' height='90%' sx={{ margin: '10px' }} />
+                <Card sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '55%' }}>
+                    <img src={userInfo.characterImg} alt='Character' style={{ padding: '10px' }} ></img>
                     <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <Typography fontSize='40px'>{userInfo.nickname}</Typography>
                         <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
                         <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '10px', }}>
-                            <img alt='Diamond' src='/images/diamond.png' width='60px' style={{ marginRight: '10px' }} />
-                            <Typography fontSize='25px'>{userInfo.xp}</Typography>
+                            <img alt='Diamond' src='/images/diamond.png' width='35px' style={{ marginRight: '10px' }} />
+                            <Typography fontSize='22px'>{userInfo.xp} gyémántod van</Typography>
                         </Box>
+                        <Box style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', padding: '10px', }}>
+                            <img alt='Level' src={`/images/level${userInfo.level}.png`} width='60px' style={{ marginRight: '10px' }} />
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                <Typography fontSize='25px'>{userInfo.levelName}</Typography>
+                                <Typography fontSize='18px'>{userInfo.level}. szint</Typography>
+                            </Box>
+                        </Box>
+                        <Typography fontSize='18px' textAlign='center'>
+                            {userInfo.level < 4
+                                ? `A következő szint eléréséig még ${100 - userInfo.xp % 100} gyémántot kell szerezned!`
+                                : 'Eljutottál a legmagasabb szintre, egy igazi Legenda vagy!'}
+
+                        </Typography>
                     </CardContent>
                 </Card>
                 <>

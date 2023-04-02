@@ -69,10 +69,12 @@ export default function Header({ user }) {
                                 <CustomBox>
                                     <Typography sx={{ textAlign: 'center' }}>{user.nickname}</Typography>
                                     <Box style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                                        <img src='/images/diamond.png' width='25px' alt='Diamond' style={{ paddingRight: '8px' }} />
+                                        <img src='/images/diamond.png' width='15px' alt='Diamond' style={{ paddingRight: '8px' }} />
                                         <Typography>{user.xp}</Typography>
                                     </Box>
                                 </CustomBox>
+
+                                <img src={`/images/level${user.level}.png`} width='35px' alt='Level1' style={{ paddingRight: '8px' }} />
                                 <CustomAvatar alt='Character icon' src={user.icon} />
                             </IconButton>
                         </Tooltip>
