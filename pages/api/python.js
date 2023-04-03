@@ -4,8 +4,12 @@ export default async function handler(req, res) {
 
     switch (req.method) {
         case 'POST': {
+
             const result = {};
             try {
+                if (checkOpenWithParameter(req.body.code)) {
+                    throw new Error('Az open fuggvenyt csak parameter nelkul tudod hasznalni ebben a szerkesztoben!')
+                }
                 result.value = await PythonShell.runString(req.body.code, null);
                 result.stringValue = result.value.toString();
                 result.completed = 0;
@@ -23,7 +27,7 @@ export default async function handler(req, res) {
                             }
                             break;
                         case 'output-type':
-                            if (answer.value === "number") {
+                            if (answer.value === 'number') {
                                 if (!isNaN(Number(result.value[0]))) {
                                     result.completed++;
                                 }
@@ -38,16 +42,12 @@ export default async function handler(req, res) {
                             break;
                     }
                 }
-                result.state = result.completed === req.body.correctAnswer.length ? "completed" : "failed";
+                result.state = result.completed === req.body.correctAnswer.length ? 'completed' : 'failed';
 
             }
             catch (error) {
                 result.value = [error.toString()];
-                if (result.value[0].includes("File ")) {
-                    const start = result.value[0].indexOf("File");
-                    const end = result.value[0].indexOf('.py",');
-                    result.value[0] = result.value[0].substring(0, start).trim() + result.value[0].substring(end + 5);
-                }
+                result.value[0] = resultValidator(result.value);
             }
             res.status(200).json(result);
             break
@@ -56,4 +56,26 @@ export default async function handler(req, res) {
             res.status(405).send({ message: 'Only POST requests allowed' })
             break
     }
+}
+
+const checkOpenWithParameter = (code) => {
+    const trimmedCode = code.replace(/\s/g, '');
+    const start = trimmedCode.indexOf('open(');
+    if (start >= 0) {
+        const mark = trimmedCode[start + 5];
+        const end = trimmedCode.indexOf(mark, start + 6);
+        if (trimmedCode[end + 1] !== ')') {
+            return true;
+        }
+    }
+    return false;
+}
+
+const resultValidator = (value) => {
+    if (value[0].includes('File ')) {
+        const start = value[0].indexOf('File');
+        const end = value[0].indexOf('.py",');
+        return value[0].substring(0, start).trim() + value[0].substring(end + 5);
+    }
+    return value[0];
 }
