@@ -50,7 +50,7 @@ export default function Profile({ userInfo, missions, characters }) {
                 <>
                     <Typography fontSize='30px' textAlign='center' marginTop='10px'>Megszerzett jutalmaid</Typography>
                     <List component={Stack} direction='row'>
-                        {missions.map((item) => (
+                        {missions.sort((a, b) => a.num - b.num).map((item) => (
                             <Tooltip key={item._id} placement='top-start' arrow title={
                                 !userInfo.badges?.includes(item._id.toString())
                                     ? `Ezért a jutalomért látogass el a ${item.title}re`
