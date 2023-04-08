@@ -15,11 +15,11 @@ const TaskTooltip = styled(({ className, ...props }) => (
     justifyContent: 'center'
 }));
 
-const CustomButton = styled(Button)(({ theme, currentTask }) => ({
+const CustomButton = styled(Button)(({ theme, task }) => ({
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.lightGreen.light,
     marginRight: '10px',
-    visibility: currentTask.kind === 'lesson' || currentTask.state === 'completed' ? 'visible' : 'hidden',
+    visibility: task.kind === 'lesson' || task.state === 'completed' ? 'visible' : 'hidden',
     maxWidth: '110px',
     minWidth: '110px',
     ':hover': {
@@ -41,7 +41,7 @@ export default function TaskFooter({ island, currentTask, nextTaskState, handleN
                     </TaskTooltip>
                 ))}
             </div>
-            <CustomButton variant='contained' onClick={handleNextTask} currentTask={currentTask}>
+            <CustomButton variant='contained' onClick={handleNextTask} task={currentTask}>
                 {nextTaskState ? 'Következő' : 'Kész!'}
             </CustomButton>
         </Toolbar>
