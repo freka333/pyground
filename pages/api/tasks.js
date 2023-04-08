@@ -23,19 +23,21 @@ export default async function handler(req, res) {
                 // Sends a HTTP bad request error code
                 return res.status(400).json({ data: 'id not found' })
             }
-            console.log("path:", req.body.path)
 
             const missionResult = await Mission.findById(req.body.id);
             missionResult.tasks.push({
                 path: req.body.path,
-                serial_number: req.body.serial_number,
                 kind: req.body.kind,
                 title: req.body.title,
                 description: req.body.description,
+                ...(req.body.defaultCode && { defaultCode: req.body.defaultCode }),
+                ...(req.body.correctAnswer && { correctAnswer: req.body.correctAnswer }),
+                ...(req.body.point && { point: req.body.point }),
             });
             await missionResult.save();
 
-            res.status(200).json("siker");
+            res.status(200).json("successful saving");
+            break
         }
         default:
             res.status(405).send({ message: 'Only POST requests allowed' })
