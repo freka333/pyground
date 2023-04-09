@@ -15,6 +15,7 @@ export default async function handler(req, res) {
 
             const missionFromDb = await Mission.findOne({ _id: req.body.missionId });
             const missionTaskIndex = missionFromDb.tasks.findIndex(task => task._id.toString() === req.body.taskId);
+            //if the following task exists:
             if (missionTaskIndex > -1 && missionFromDb.tasks[missionTaskIndex + 1]) {
                 userFromDb.completedTasks.push({
                     mission: missionFromDb._id,
@@ -22,16 +23,19 @@ export default async function handler(req, res) {
                     completed: false
                 })
             }
+            //if this was the last task in the mission:
             else {
-                if (missionTaskIndex > -1 && missionFromDb.num + 1) {
-                    const nextMissionFromDb = await Mission.findOne({ num: missionFromDb.num + 1 })
+                const nextNum = missionFromDb.num + 1;
+                const nextMissionFromDb = await Mission.findOne({ num: nextNum })
+                //if there is another mission:
+                if (missionTaskIndex > -1 && nextMissionFromDb && !nextMissionFromDb.disabled) {
                     userFromDb.completedTasks.push({
                         mission: nextMissionFromDb._id,
                         task: nextMissionFromDb.tasks[0]._id,
                         completed: false
                     })
-                    userFromDb.badges.push(missionFromDb._id.toString())
                 }
+                userFromDb.badges.push(missionFromDb._id.toString())
             }
 
             await userFromDb.save();
