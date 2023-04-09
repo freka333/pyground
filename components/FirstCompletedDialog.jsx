@@ -1,11 +1,11 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 
-export default function FirstCompletedDialog({ open, handleClick }) {
+export default function FirstCompletedDialog({ open, handleClick, point }) {
     return (
         <Dialog open={open} fullWidth maxWidth='sm' >
             <DialogContent sx={{ padding: '15px' }}>
                 <DialogContentText textAlign='center' fontSize='18px' color='text.primary'>
-                    Az első akadályt sikeresen elhárítottad, ezért kaptál 10 gyémántot!
+                    Az első akadályt sikeresen elhárítottad, ezért kaptál {point} gyémántot!
                     Csak így tovább!
                 </DialogContentText>
                 <img src='/images/diamond.png' alt='diamond' width='60px' style={{ display: 'flex', margin: 'auto' }} />

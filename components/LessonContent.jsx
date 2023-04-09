@@ -67,7 +67,7 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
             </ContainerBox>
             <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
-            <FirstCompletedDialog open={openFirstDialog} handleClick={openNextTask} />
+            <FirstCompletedDialog open={openFirstDialog} handleClick={openNextTask} point={task.point} />
         </>
     )
 }
