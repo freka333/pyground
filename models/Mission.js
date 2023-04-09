@@ -7,6 +7,7 @@ const MissionSchema = new mongoose.Schema({
     badge_name: String,
     badge_img: String,
     intro: String,
+    intro_bg: String,
     tasks: [{
         path: String,
         kind: String,
