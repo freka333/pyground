@@ -26,7 +26,7 @@ export const authOptions = {
                 userFromDb.completedTasks = [{
                     mission: firstMission,
                     task: firstMission.tasks[0]._id,
-                    completed: false
+                    status: "new"
                 }];
                 userFromDb.badges = [];
                 userFromDb.initialized = true;

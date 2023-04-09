@@ -99,13 +99,7 @@ export const getServerSideProps = async (context) => {
             userInfo.completedTasks.forEach(completedTask => {
                 if (!task.state || task.state === "locked") {
                     if (task._id === completedTask.task.toString()) {
-                        if (completedTask.completed) {
-                            task.state = "completed";
-                        }
-                        else {
-                            task.state = "started";
-                        }
-
+                        task.state = completedTask.status;
                     }
                     else {
                         task.state = "locked"

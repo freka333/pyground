@@ -11,7 +11,7 @@ export default async function handler(req, res) {
             userFromDb.xp = userFromDb.xp + req.body.point;
 
             const taskIndex = userFromDb.completedTasks.findIndex(task => task.task.toString() === req.body.taskId);
-            userFromDb.completedTasks[taskIndex].completed = true;
+            userFromDb.completedTasks[taskIndex].status = "completed";
 
             const missionFromDb = await Mission.findOne({ _id: req.body.missionId });
             const missionTaskIndex = missionFromDb.tasks.findIndex(task => task._id.toString() === req.body.taskId);
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
                 userFromDb.completedTasks.push({
                     mission: missionFromDb._id,
                     task: missionFromDb.tasks[missionTaskIndex + 1]._id,
-                    completed: false
+                    status: "started"
                 })
             }
             //if this was the last task in the mission:
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
                     userFromDb.completedTasks.push({
                         mission: nextMissionFromDb._id,
                         task: nextMissionFromDb.tasks[0]._id,
-                        completed: false
+                        status: "new"
                     })
                 }
                 userFromDb.badges.push(missionFromDb._id.toString())

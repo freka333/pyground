@@ -10,21 +10,47 @@ import ExerciseContent from "../../components/ExerciseContent";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import TaskNotFound from "../../components/TaskNotFound";
+import MissionWelcomeDialog from "../../components/MissionWelcomeDialog";
 
 export default function ProjectPage({ foundMission, foundTask, hasError, userInfo, characters, missionIdList, defaultCode }) {
+    const router = useRouter();
 
     if (hasError) {
         return <TaskNotFound user={userInfo} characters={characters} />
     }
 
+    const refreshData = () => {
+        router.replace(router.asPath);
+    }
+
+    const handleIntroClose = async () => {
+        const data = {
+            id: userInfo.id,
+            taskId: foundTask._id,
+        }
+        const response = await fetch('/api/user/firstTaskStatus', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        });
+        await response.json();
+        refreshData();
+    }
+
     return (
-        <Layout user={userInfo} characters={characters}>
-            {
-                foundTask.kind === 'lesson'
-                    ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
-                    : <ExerciseContent key={foundTask._id} user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} defaultCode={defaultCode} />
-            }
-        </Layout>
+        <>
+            {foundTask.state === "new" &&
+                <MissionWelcomeDialog description={foundMission.intro} background={foundMission.intro_bg} handleClick={handleIntroClose} />}
+            <Layout user={userInfo} characters={characters}>
+                {
+                    foundTask.kind === 'lesson'
+                        ? <LessonContent user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} />
+                        : <ExerciseContent key={foundTask._id} user={userInfo} mission={foundMission} task={foundTask} missionIdList={missionIdList} defaultCode={defaultCode} />
+                }
+            </Layout>
+        </>
     )
 
 }
@@ -71,16 +97,10 @@ export const getServerSideProps = async (context) => {
         userInfo.completedTasks.forEach(completedTask => {
             if (!task.state || task.state === 'locked') {
                 if (task._id === completedTask.task.toString()) {
-                    if (completedTask.completed) {
-                        task.state = 'completed';
-                    }
-                    else {
-                        task.state = 'started';
-                    }
-
+                    task.state = completedTask.status;
                 }
                 else {
-                    task.state = 'locked'
+                    task.state = "locked"
                 }
 
             }
