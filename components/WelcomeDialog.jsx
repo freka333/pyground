@@ -56,7 +56,7 @@ export default function WelcomeDialog2({ user, characters }) {
                     <DialogTitle>Üdvözöllek a PyGround világában!</DialogTitle>
                     <DialogContent>
                         <Typography>
-                            Mielőtt elkezdenénk a Python nyelvvel való ismerkedést, válassz egy karaktert magadnak, akinek a képességeit fejlesztheted a tanulás során, majd nevezd el! Ez a név fog megjelenni a felületen, ezt később bármikor módosíthatod.
+                            Mielőtt elkezdenénk a kalandozást és a Python nyelvvel való ismerkedést, válassz egy karaktert magadnak, akinek a képességeit fejlesztheted a tanulás során, majd nevezd el Őt! Ez a név fog megjelenni a felületen, ezt később bármikor módosíthatod.
                         </Typography>
                     </DialogContent>
                     <DialogActions>
@@ -78,7 +78,7 @@ export default function WelcomeDialog2({ user, characters }) {
                             Máris kezdhetjük a kódolást!
                         </Typography>
                         <Typography>
-                            Minden szigeten feladatok várnak, amiknek a sikeres teljesítését követően gyémántokat szerezhetsz, valamint egy sziget összes feladatának megoldása után egy-egy kitüntetést is bezsebelhetsz.
+                            Minden szigeten feladatok várnak, amiknek a sikeres teljesítését követően gyémántokat szerezhetsz. Kezdetben első szintű Újonc vagy, de ha elég gyémántot összegyűjtesz, szintet léphetsz, ezen kívül az egyes szigeteken lévő összes feladat megoldása után kitüntetéseket is bezsebelhetsz.
                         </Typography>
                         <Typography>
                             Kezdődjön a kaland, sok sikert!
