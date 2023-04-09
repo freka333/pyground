@@ -6,16 +6,14 @@ const MissionSchema = new mongoose.Schema({
     image: String,
     badge_name: String,
     badge_img: String,
+    intro: String,
     tasks: [{
         path: String,
         kind: String,
         title: String,
         description: String,
         defaultCode: String,
-        correctAnswer: [{
-            type: String,
-            value: String
-        }],
+        solution: String,
         point: Number,
     }],
     disabled: Boolean,

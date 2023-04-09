@@ -49,7 +49,12 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ code: editorValue, correctAnswer: task.correctAnswer, defaultCode: task.defaultCode }),
+            body: JSON.stringify({
+                code: editorValue,
+                correctAnswer: task.correctAnswer,
+                defaultCode: task.defaultCode,
+                solution: task.solution
+            }),
         });
         const result = await response.json();
 
@@ -58,7 +63,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                 id: user.id,
                 taskId: task._id,
                 missionId: mission._id,
-                point: task.point,
+                point: task.point || 10,
             }
             const responseTaskCompleted = await fetch('/api/user/taskCompleted', {
                 method: 'POST',

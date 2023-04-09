@@ -32,7 +32,7 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
                 id: user.id,
                 taskId: task._id,
                 missionId: mission._id,
-                point: 10,
+                point: task.point || 10,
             }
             const responseTaskCompleted = await fetch('/api/user/taskCompleted', {
                 method: 'POST',
