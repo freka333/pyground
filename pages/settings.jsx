@@ -78,7 +78,7 @@ export default function Settings({ userInfo, characters, email }) {
         <Layout user={userInfo} >
             <ContainerBox flexDirection='column' alignItems='center'>
                 <Typography fontSize='30px' sx={{ margin: '10px' }}>Beállítások</Typography>
-                <Card sx={{ width: '50%', padding: '10px', borderRadius: '15px' }}>
+                <Card sx={{ width: '50%', minWidth: '750px', padding: '10px', borderRadius: '15px' }}>
                     <Grid container sx={{ alignItems: 'center' }}>
                         <Grid item xs={4}>
                             <CustomAvatar alt='User icon' src={userInfo.icon} />
