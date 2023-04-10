@@ -1,5 +1,5 @@
 import Editor, { loader } from "@monaco-editor/react";
-import { Box, Button, Grid, IconButton, Typography } from "@mui/material"
+import { Box, Button, Grid, IconButton, Tooltip, Typography } from "@mui/material"
 import Stack from "@mui/material/Stack"
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
@@ -23,7 +23,7 @@ const CustomButton = styled(Button)(({ theme }) => ({
     }
 }))
 
-const findTaskIndex = (mission, task) => {
+const findNextTaskIndex = (mission, task) => {
     const index = mission.tasks.findIndex(t => t._id === task._id)
     return mission.tasks[index + 1]
 }
@@ -35,6 +35,8 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [resultState, setResultState] = useState("");
     const [openSolution, setOpenSolution] = useState(false);
+    const taskIndex = user.completedTasks.findIndex(t => t.task === task._id);
+    const [checkedTheSolution, setCheckedTheSolution] = useState(user.completedTasks[taskIndex].checked_the_solution)
 
     const refreshData = () => {
         router.replace(router.asPath);
@@ -43,7 +45,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
     const [editorValue, setEditorValue] = useState(defaultCode);
     const [result, setResult] = useState(null);
 
-    const nextTask = findTaskIndex(mission, task);
+    const nextTask = findNextTaskIndex(mission, task);
 
     const handleEditorChange = (value) => {
         setEditorValue(value);
@@ -72,6 +74,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                 taskId: task._id,
                 missionId: mission._id,
                 point: task.point || 10,
+                openedSolution: checkedTheSolution
             }
             const responseTaskCompleted = await fetch('/api/user/taskCompleted', {
                 method: 'POST',
@@ -107,6 +110,25 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
         setEditorValue(defaultCode);
     }
 
+    const handleOpenSolution = async () => {
+        setOpenSolution(true);
+        if (!checkedTheSolution) {
+            const response = await fetch('/api/user/pointDeduction', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: user.id,
+                    taskId: task._id,
+                    openedSolution: true
+                }),
+            });
+            await response.json();
+            setCheckedTheSolution(true);
+        }
+    }
+
     useEffect(() => {
         const defineTheme = async () => {
             const monaco = await loader.init();
@@ -140,7 +162,9 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                         </Box>
                         <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', backgroundColor: 'purpleGrey.main', padding: '7px' }}>
                             <Typography fontSize='14px'>Elakadtál? Nézd meg a megoldást!</Typography>
-                            <IconButton disableRipple onClick={() => setOpenSolution(true)} sx={{ padding: '2px' }}><Bulb /></IconButton>
+                            <Tooltip placement='top' title='Ha megnézed a megoldást, 5 gyémánttal kevesebbet kapsz jutalmul!'>
+                                <IconButton disableRipple onClick={handleOpenSolution} sx={{ padding: '2px' }}><Bulb /></IconButton>
+                            </Tooltip>
                         </Box>
                     </Box>
                 </Grid>

@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
         mission: mongoose.Schema.Types.ObjectId,
         task: mongoose.Schema.Types.ObjectId,
         status: String,
+        checked_the_solution: Boolean
     }],
     badges: [String],
 })
