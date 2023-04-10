@@ -54,7 +54,15 @@ const theme = createTheme({
         codeEditor: {
             main: '#2A173D',
             dark: '#011627'
-        }
+        },
+        successAlert: {
+            main: '#bae0cd',
+            dark: '#084225',
+        },
+        warningAlert: {
+            main: '#ebdcbe',
+            dark: '#2b1f07'
+        },
     },
     typography: {
         fontFamily: roboto.style.fontFamily,

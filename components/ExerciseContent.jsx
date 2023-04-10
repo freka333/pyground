@@ -10,6 +10,7 @@ import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
 import { styled } from "@mui/system";
+import RunResultSnackbar from "./RunResultSnackbar";
 
 const CustomButton = styled(Button)(({ theme }) => ({
     margin: '5px 5px 0 0',
@@ -29,6 +30,8 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
     const editorRef = useRef(null);
     const router = useRouter();
     const [openMissionComplete, setOpenMissionComplete] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [resultState, setResultState] = useState("");
 
     const refreshData = () => {
         router.replace(router.asPath);
@@ -57,6 +60,8 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
             }),
         });
         const result = await response.json();
+        setResultState(result.state);
+        setOpenSnackbar(true);
 
         if (task.state === 'started' && result.state === 'completed') {
             const data = {
@@ -170,6 +175,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                 </Grid>
             </Grid >
             <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
+            <RunResultSnackbar resultState={resultState} openSnackbar={openSnackbar} handleOnClose={() => setOpenSnackbar(false)} />
             <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
         </>
     )
