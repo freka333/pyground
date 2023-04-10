@@ -53,7 +53,7 @@ export default function Home({ userInfo, missions, characters, completedMissions
 
     return (
         <Layout user={userInfo} characters={characters}>
-            <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-evenly' paddingTop='10px' >
+            <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-between' paddingTop='10px' >
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '150px', gridRowGap: '30px' }}>
                     {missions.map((mission) => (
                         <div key={mission.title}>

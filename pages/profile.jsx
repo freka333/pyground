@@ -22,9 +22,9 @@ export default function Profile({ userInfo, missions, characters }) {
 
     return (
         <Layout user={userInfo} characters={characters}>
-            <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-evenly' paddingTop='10px' >
-                <Card sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '55%' }}>
-                    <img src={userInfo.characterImg} alt='Character' style={{ padding: '10px' }} ></img>
+            <ContainerBox display='block' paddingTop='10px' >
+                <Card sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto', width: '55%' }}>
+                    <img src={userInfo.characterImg} alt='Character' style={{ padding: '10px', maxWidth: '200px' }} ></img>
                     <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <Typography fontSize='40px'>{userInfo.nickname}</Typography>
                         <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
@@ -49,14 +49,14 @@ export default function Profile({ userInfo, missions, characters }) {
                 </Card>
                 <>
                     <Typography fontSize='30px' textAlign='center' marginTop='10px'>Megszerzett jutalmaid</Typography>
-                    <List component={Stack} direction='row'>
+                    <List component={Stack} direction='row' sx={{ maxWidth: '50%', margin: '0 auto' }}>
                         {missions.sort((a, b) => a.num - b.num).map((item) => (
                             <Tooltip key={item._id} placement='top-start' arrow title={
                                 !userInfo.badges?.includes(item._id.toString())
                                     ? `Ezért a jutalomért látogass el a ${item.title}re`
                                     : `Gratulálok! Megszerezted a ${item.title} jutalmát!`
                             }>
-                                <ListItem key={item.title}>
+                                <ListItem key={item.title} sx={{ justifyContent: 'center' }}>
                                     <img
                                         src={item.badge_img}
                                         alt={item.badge_name}
@@ -68,7 +68,9 @@ export default function Profile({ userInfo, missions, characters }) {
                         ))}
                     </List>
                 </>
-                <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
+                </div>
             </ContainerBox>
         </Layout >
     )
