@@ -27,12 +27,14 @@ export default function MissionPopover({ mission, completedMissions, openedPopov
                                             <Typography fontSize='17px'>{task.title}</Typography>
                                         </>
                                         : <Link style={{ textDecoration: 'none', color: '#4f12cb', display: 'flex', alignItems: 'center' }} href={`/${mission.title}/${task.path}`}>
-                                            <IconButton aria-label={task.state === 'completed' ? 'Checkmark' : 'Circle'} color={task.state === 'completed' ? 'secondary' : 'grey'} disableRipple>
-                                                {task.state === 'completed'
-                                                    ? <CheckCircle fontSize='inherit' />
-                                                    : <Circle fontSize='inherit' />
-                                                }
-                                            </IconButton>
+                                            {task.state === 'completed'
+                                                ? <IconButton aria-label='Checkmark' color='secondary' disableRipple>
+                                                    <CheckCircle fontSize='inherit' />
+                                                </IconButton>
+                                                : <IconButton aria-label='Circle' color='grey' disableRipple>
+                                                    <Circle fontSize='inherit' />
+                                                </IconButton>
+                                            }
                                             <Typography fontSize='17px'>{task.title}</Typography>
                                         </Link>
                                     }
