@@ -1,16 +1,18 @@
 import Editor, { loader } from "@monaco-editor/react";
-import { Box, Button, Grid, Typography } from "@mui/material"
+import { Box, Button, Grid, IconButton, Typography } from "@mui/material"
 import Stack from "@mui/material/Stack"
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import themeData from "monaco-themes/themes/Night Owl.json";
 import PlayCircle from "@mui/icons-material/PlayCircle";
 import RestartAlt from "@mui/icons-material/RestartAlt";
+import Bulb from "@mui/icons-material/EmojiObjects";
 import MissionComplete from "./MissionComplete";
 import TaskFooter from "./TaskFooter";
 const theme = "night-owl";
 import { styled } from "@mui/system";
 import RunResultSnackbar from "./RunResultSnackbar";
+import SolutionDialog from "./SolutionDialog";
 
 const CustomButton = styled(Button)(({ theme }) => ({
     margin: '5px 5px 0 0',
@@ -32,6 +34,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
     const [openMissionComplete, setOpenMissionComplete] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [resultState, setResultState] = useState("");
+    const [openSolution, setOpenSolution] = useState(false);
 
     const refreshData = () => {
         router.replace(router.asPath);
@@ -132,8 +135,12 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                             <Typography fontSize='15px' align='center'>{mission.title}</Typography>
                             <Typography fontSize='20px' align='center'>{task.title}</Typography>
                         </Box>
-                        <Box padding='10px' overflow='auto'>
+                        <Box padding='10px' height='100%' overflow='auto'>
                             <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
+                        </Box>
+                        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', backgroundColor: 'purpleGrey.main', padding: '7px' }}>
+                            <Typography fontSize='14px'>Elakadtál? Nézd meg a megoldást!</Typography>
+                            <IconButton disableRipple onClick={() => setOpenSolution(true)} sx={{ padding: '2px' }}><Bulb /></IconButton>
                         </Box>
                     </Box>
                 </Grid>
@@ -175,6 +182,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                 </Grid>
             </Grid >
             <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
+            {openSolution && <SolutionDialog code={task.solution} handleClose={() => setOpenSolution(false)} />}
             <RunResultSnackbar resultState={resultState} openSnackbar={openSnackbar} handleOnClose={() => setOpenSnackbar(false)} />
             <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
         </>

@@ -35,6 +35,7 @@ const theme = createTheme({
             light: '#aba6ad'
         },
         purpleGrey: {
+            main: '#a79eb1',
             dark: '#534660'
         },
         lightPurpleGrey: {
