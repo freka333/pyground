@@ -61,6 +61,7 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
         <>
             <ContainerBox display='grid'>
                 <Paper sx={{ width: '70%', borderRadius: 0, padding: '20px', backgroundColor: 'lightPurpleGrey.main', marginLeft: 'auto', marginRight: 'auto' }}>
+                    <Typography fontSize='18px'>{mission.title}</Typography>
                     <Typography variant='h4'>{task.title}</Typography>
                     <div style={{ fontFamily: 'Calibri, sans-serif', fontSize: '18px' }} dangerouslySetInnerHTML={{ __html: task.description }} />
                 </Paper>
