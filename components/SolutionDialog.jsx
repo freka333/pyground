@@ -2,7 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/
 
 export default function SolutionDialog({ code, handleClose }) {
     return (
-        <Dialog open>
+        <Dialog open maxWidth='lg'>
             <DialogTitle>
                 Megoldás:
             </DialogTitle>
