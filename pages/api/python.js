@@ -1,20 +1,42 @@
 import { PythonShell } from 'python-shell';
 
+const openFunction = `import pathlib
+import io
+                
+def open(source_file):
+    if(source_file == "public/sources/quenya.txt"):
+        file = pathlib.Path("public/sources/quenya_v2.txt")
+        txt = file.read_text()
+        return io.StringIO(txt)
+    elif(source_file == "public/sources/terkep.txt"):
+        file = pathlib.Path("public/sources/terkep_v2.txt")
+        txt = file.read_text()
+        return io.StringIO(txt)
+    elif(source_file == "public/sources/fozetek.txt"):
+        file = pathlib.Path("public/sources/fozetek_v2.txt")
+        txt = file.read_text()
+        return io.StringIO(txt)
+    elif(source_file == "public/sources/orkok.txt"):
+        file = pathlib.Path("public/sources/orkok_v2.txt")
+        txt = file.read_text()
+        return io.StringIO(txt)
+
+`
+
 export default async function handler(req, res) {
 
     switch (req.method) {
         case 'POST': {
             const result = {};
             try {
-                if (checkOpenWithParameter(req.body.code)) {
-                    throw new Error('Az open fuggvenyt csak parameter nelkul tudod hasznalni ebben a szerkesztoben!')
-                }
                 result.value = await PythonShell.runString(req.body.code, null);
-                result.stringValue = result.value.toString();
-
                 const solution = await PythonShell.runString(req.body.solution, null);
+                //result.state = (result.value.toString() === solution.toString()) ? 'completed' : 'failed';
 
-                result.state = result.stringValue === solution.toString() ? 'completed' : 'failed';
+                const code_v2 = await PythonShell.runString(openFunction + req.body.code, null);
+                const solution_v2 = await PythonShell.runString(openFunction + req.body.solution, null);
+
+                result.state = (result.value.toString() === solution.toString() && code_v2.toString() === solution_v2.toString()) ? 'completed' : 'failed';
             }
             catch (error) {
                 result.value = [error.toString()];
@@ -27,19 +49,6 @@ export default async function handler(req, res) {
             res.status(405).send({ message: 'Only POST requests allowed' })
             break
     }
-}
-
-const checkOpenWithParameter = (code) => {
-    const trimmedCode = code.replace(/\s/g, '');
-    const start = trimmedCode.indexOf('open(');
-    if (start >= 0) {
-        const mark = trimmedCode[start + 5];
-        const end = trimmedCode.indexOf(mark, start + 6);
-        if (trimmedCode[end + 1] !== ')') {
-            return true;
-        }
-    }
-    return false;
 }
 
 const resultValidator = (value) => {
