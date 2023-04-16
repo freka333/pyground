@@ -81,7 +81,7 @@ export default function WelcomeDialog2({ user, characters }) {
                             Minden szigeten feladatok várnak, amiknek a sikeres teljesítését követően gyémántokat szerezhetsz. Kezdetben első szintű Újonc vagy, de ha elég gyémántot összegyűjtesz, szintet léphetsz, ezen kívül az egyes szigeteken lévő összes feladat megoldása után kitüntetéseket is bezsebelhetsz.
                         </Typography>
                         <Typography>
-                            Segítséget is kérhetsz, ha elakadnál valamelyik feladatnál, de vigyázz, ha megnézed a megoldást, kevesebb gyémántot kapsz, mintha egyedül jöttál volna rá a megoldásra!
+                            Segítséget is kérhetsz, ha elakadnál valamelyik feladatnál, de vigyázz, ha megnézed a megoldást, kevesebb gyémántot kapsz, mintha egyedül jöttél volna rá a megoldásra!
                         </Typography>
                         <Typography>
                             Kezdődjön a kaland, sok sikert!

@@ -11,7 +11,7 @@ export default function MissionPopover({ mission, completedMissions, openedPopov
             anchorOrigin={{ vertical: 'center', horizontal: 'center' }}
             transformOrigin={{ vertical: 'bottom', horizontal: 'center' }} >
             {!completedMissions?.includes(mission._id) ?
-                <Typography textAlign='center'>Erre a szigetre csak azután léphetsz be, ha minden korábbi feladatot megoldottál.</Typography>
+                <Typography textAlign='center'>Erre a szigetre csak azután léphetsz be, miután minden korábbi feladatot megoldottál.</Typography>
                 : <><Typography fontSize='18px' textAlign='center'>
                     {mission.title}
                 </Typography>
