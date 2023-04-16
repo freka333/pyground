@@ -23,8 +23,9 @@ export default function Profile({ userInfo, missions, characters }) {
     return (
         <Layout user={userInfo} characters={characters}>
             <ContainerBox display='block' paddingTop='10px' >
-                <Card sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto', width: '55%' }}>
-                    <img src={userInfo.characterImg} alt='Character' style={{ padding: '10px', maxWidth: '200px' }} ></img>
+                <Card sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto', minWidth: '750px', width: '55%' }}>
+                    <img src={userInfo.characterImg
+                    } alt='Character' style={{ padding: '10px', maxWidth: '200px' }} ></img>
                     <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <Typography fontSize='40px'>{userInfo.nickname}</Typography>
                         <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
@@ -49,7 +50,7 @@ export default function Profile({ userInfo, missions, characters }) {
                 </Card>
                 <>
                     <Typography fontSize='30px' textAlign='center' marginTop='10px'>Megszerzett jutalmaid</Typography>
-                    <List component={Stack} direction='row' sx={{ maxWidth: '50%', margin: '0 auto' }}>
+                    <List component={Stack} direction='row' sx={{ maxWidth: '50%', margin: '0 auto', justifyContent: 'center' }}>
                         {missions.sort((a, b) => a.num - b.num).map((item) => (
                             <Tooltip key={item._id} placement='top-start' arrow title={
                                 !userInfo.badges?.includes(item._id.toString())
