@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import initInfo from "@/lib/initInfo";
 import dbConnect from "@/lib/mongoose";
-import { Card, CardMedia, CardContent, Box, Stack, Typography, List, ListItem, Tooltip } from "@mui/material";
+import { Card, CardContent, Box, Stack, Typography, List, ListItem, Tooltip, Link } from "@mui/material";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 import Mission from "@/models/Mission";
@@ -51,22 +51,27 @@ export default function Profile({ userInfo, missions, characters }) {
                 <>
                     <Typography fontSize='30px' textAlign='center' marginTop='10px'>Megszerzett jutalmaid</Typography>
                     <List component={Stack} direction='row' sx={{ maxWidth: '50%', margin: '0 auto', justifyContent: 'center' }}>
-                        {missions.sort((a, b) => a.num - b.num).map((item) => (
-                            <Tooltip key={item._id} placement='top-start' arrow title={
-                                !userInfo.badges?.includes(item._id.toString())
-                                    ? `Ezért a jutalomért látogass el a ${item.title}re`
-                                    : `Gratulálok! Megszerezted a ${item.title} jutalmát!`
+                        {missions.map((item) => {
+                            const lastTask = [...userInfo.completedTasks].reverse().find(t => t.mission === item._id);
+                            const path = lastTask ? `/${item.title}/${item.tasks.find(t => t._id === lastTask.task).path}` : '/';
+                            const isRewardBadge = userInfo.badges?.includes(item._id.toString());
+                            return <Tooltip key={item._id} placement='top-start' arrow title={
+                                isRewardBadge
+                                    ? `Gratulálok! Megszerezted a ${item.title} jutalmát!`
+                                    : `Ezért a jutalomért látogass el a ${item.title}re`
                             }>
-                                <ListItem key={item.title} sx={{ justifyContent: 'center' }}>
-                                    <img
-                                        src={item.badge_img}
-                                        alt={item.badge_name}
-                                        width='150px'
-                                        style={{ filter: !userInfo.badges?.includes(item._id.toString()) ? 'grayscale(1) contrast(0.1) brightness(0.8)' : 'none' }}
-                                    />
-                                </ListItem>
+                                <Link href={path}>
+                                    <ListItem key={item.title} sx={{ justifyContent: 'center' }}>
+                                        <img
+                                            src={item.badge_img}
+                                            alt={item.badge_name}
+                                            width='150px'
+                                            style={{ filter: !isRewardBadge ? 'grayscale(1) contrast(0.1) brightness(0.8)' : 'none' }}
+                                        />
+                                    </ListItem>
+                                </Link>
                             </Tooltip>
-                        ))}
+                        })}
                     </List>
                 </>
                 <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -88,12 +93,13 @@ export const getServerSideProps = async (context) => {
     const info = await initInfo(session.user);
     const { userInfo, characters } = info;
 
-    const missionsResult = await Mission.find({ disabled: false })
+    const missionsResult = await Mission.find({ disabled: false });
+    missionsResult.sort((a, b) => a.num - b.num);
 
     const missions = missionsResult.map((doc) => {
         const mission = doc.toObject();
         mission._id = mission._id.toString();
-        mission.tasks = JSON.stringify(mission.tasks);
+        mission.tasks = JSON.parse(JSON.stringify(mission.tasks));
         return mission
     })
 
