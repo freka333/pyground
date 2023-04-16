@@ -33,13 +33,15 @@ export default function TaskFooter({ island, currentTask, nextTaskState, handleN
         <Toolbar disableGutters variant='dense' sx={{ backgroundColor: 'codeEditor.dark', display: 'grid', gridTemplateColumns: '1fr auto' }} >
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '5px' }}>
                 <img src={island.image} alt={island.title} width='40px' />
-                {island.tasks.map(task => (
-                    <TaskTooltip key={task._id} title={<>{task._id !== currentTask._id && task.state === 'locked' && <Lock />}{task.title}</>}>
-                        <button style={{ marginRight: '10px' }} className={'dot ' + (task._id === currentTask._id
-                            ? 'currentDot'
-                            : task.state === 'locked' ? 'lockedDot' : 'completedDot')} onClick={() => { if (task.state !== 'locked') handleGivenTask(task.path) }} />
+                {island.tasks.map(task => {
+                    const isLockedTask = task._id !== currentTask._id && task.state === 'locked';
+                    const dotStyle = task._id === currentTask._id
+                        ? 'currentDot'
+                        : task.state === 'locked' ? 'lockedDot' : 'completedDot'
+                    return <TaskTooltip key={task._id} title={<>{isLockedTask && <Lock />}{task.title}</>}>
+                        <button style={{ marginRight: '10px' }} className={'dot ' + dotStyle} onClick={() => { if (task.state !== 'locked') handleGivenTask(task.path) }} />
                     </TaskTooltip>
-                ))}
+                })}
             </div>
             <CustomButton variant='contained' onClick={handleNextTask} task={currentTask}>
                 {nextTaskState ? 'Következő' : 'Kész!'}

@@ -55,23 +55,25 @@ export default function Home({ userInfo, missions, characters, completedMissions
         <Layout user={userInfo} characters={characters}>
             <ContainerBox flexDirection='column' alignItems='center' justifyContent='space-between' paddingTop='10px' >
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gridColumnGap: '150px', gridRowGap: '30px' }}>
-                    {missions.map((mission) => (
-                        <div key={mission.title}>
+                    {missions.map((mission) => {
+                        const isAvailableMission = completedMissions?.includes(mission._id);
+
+                        return <div key={mission.title}>
                             <Button disableRipple className={classes.island} onClick={e => handlePopoverOpen(e, mission._id)}>
                                 <img
                                     src={mission.image}
                                     alt={mission.title}
                                     width='220px'
                                     style={{
-                                        filter: !completedMissions?.includes(mission._id) ? 'grayscale(100%)' : 'none',
-                                        opacity: !completedMissions?.includes(mission._id) ? 0.6 : 1
+                                        filter: isAvailableMission ? 'none' : 'grayscale(100%)',
+                                        opacity: isAvailableMission ? 1 : 0.6
                                     }}
                                 />
                             </Button>
                             <Typography textAlign='center' color='primary.dark' fontSize='20px'>{mission.title}</Typography>
                             <MissionPopover mission={mission} completedMissions={completedMissions} openedPopoverId={openedPopoverId} handlePopoverClose={handlePopoverClose} anchorEl={anchorElement} />
                         </div>
-                    ))}
+                    })}
                 </div>
                 <CopyrightButton open={openExternalDialog} handleOpen={handleOpenExternalDialog} handleClose={handleCloseExternalDialog} />
             </ContainerBox>

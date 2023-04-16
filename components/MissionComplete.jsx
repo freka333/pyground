@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 import { useRouter } from "next/router";
 
-export default function MissionComplete({ open, island, missionIdList }) {
+export default function MissionComplete({ island, missionIdList }) {
     const router = useRouter();
 
     const handleBadgeClick = () => {
@@ -12,7 +12,7 @@ export default function MissionComplete({ open, island, missionIdList }) {
         router.push('/');
     }
     return (
-        <Dialog open={open} fullWidth maxWidth='sm' >
+        <Dialog open fullWidth maxWidth='sm' >
             <DialogTitle textAlign='center'>Gratulálok!</DialogTitle>
             <DialogContent>
                 <DialogContentText color='text.primary'>

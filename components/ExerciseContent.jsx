@@ -208,7 +208,7 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
             <TaskFooter island={mission} currentTask={task} nextTaskState={nextTask?.state} handleNextTask={handleNextTask} handleGivenTask={handleGivenTask} />
             {openSolution && <SolutionDialog code={task.solution} handleClose={() => setOpenSolution(false)} />}
             <RunResultSnackbar resultState={resultState} openSnackbar={openSnackbar} handleOnClose={() => setOpenSnackbar(false)} />
-            <MissionComplete open={openMissionComplete} island={mission} missionIdList={missionIdList} />
+            {openMissionComplete && <MissionComplete island={mission} missionIdList={missionIdList} />}
         </>
     )
 }

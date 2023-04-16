@@ -24,8 +24,7 @@ export default function Profile({ userInfo, missions, characters }) {
         <Layout user={userInfo} characters={characters}>
             <ContainerBox display='block' paddingTop='10px' >
                 <Card sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '0 auto', minWidth: '750px', width: '55%' }}>
-                    <img src={userInfo.characterImg
-                    } alt='Character' style={{ padding: '10px', maxWidth: '200px' }} ></img>
+                    <img src={userInfo.characterImg} alt='Character' style={{ padding: '10px', maxWidth: '200px' }} />
                     <CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <Typography fontSize='40px'>{userInfo.nickname}</Typography>
                         <Typography fontSize='25px' fontStyle='italic'>{userInfo.characterKind}</Typography>
