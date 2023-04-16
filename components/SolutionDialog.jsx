@@ -6,7 +6,7 @@ export default function SolutionDialog({ code, handleClose }) {
             <DialogTitle>
                 Megoldás:
             </DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ userSelect: 'none' }}>
                 <code style={{ whiteSpace: 'pre-wrap' }}>{code}</code>
             </DialogContent>
             <DialogActions>
