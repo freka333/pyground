@@ -17,7 +17,7 @@ function initDialog(name, character) {
     return '';
 }
 
-export default function WelcomeDialog2({ user, characters }) {
+export default function WelcomeDialog({ user, characters }) {
     const [selectedDialog, setSelectedDialog] = useState(() => initDialog(user.nickname, user.userCharacter));
 
     const handleSelectedDialog = () => {
