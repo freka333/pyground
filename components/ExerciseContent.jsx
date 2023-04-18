@@ -59,7 +59,6 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
             },
             body: JSON.stringify({
                 code: editorValue,
-                correctAnswer: task.correctAnswer,
                 defaultCode: task.defaultCode,
                 solution: task.solution
             }),

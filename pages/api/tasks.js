@@ -38,7 +38,7 @@ export default async function handler(req, res) {
                 title: req.body.title,
                 description: req.body.description,
                 ...(req.body.defaultCode && { defaultCode: req.body.defaultCode }),
-                ...(req.body.correctAnswer && { correctAnswer: req.body.correctAnswer }),
+                ...(req.body.solution && { solution: req.body.solution }),
                 ...(req.body.point && { point: req.body.point }),
             });
             await missionResult.save();
