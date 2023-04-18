@@ -4,25 +4,6 @@ import Mission from "@/models/Mission";
 export default async function handler(req, res) {
 
     switch (req.method) {
-        case 'GET': {
-            await dbConnect();
-            const missionResult = await Mission.find({});
-
-            const missions = missionResult.sort((a, b) => a.num - b.num).map(doc => {
-                const mission = doc.toObject();
-                if (!mission.disabled) {
-                    mission._id = mission._id.toString();
-                    return {
-                        id: mission._id,
-                        number: mission.num,
-                        title: mission.title,
-                        tasks: mission.tasks
-                    }
-                }
-            })
-            res.status(200).json(missions);
-            break
-        }
         case 'POST': {
             await dbConnect();
 
