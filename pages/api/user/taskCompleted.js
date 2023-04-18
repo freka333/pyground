@@ -8,11 +8,11 @@ export default async function handler(req, res) {
     switch (req.method) {
         case 'POST': {
             const userFromDb = await User.findOne({ _id: req.body.id });
-            const point = req.body.openedSolution ? req.body.point - 5 : req.body.point;
-            userFromDb.xp = userFromDb.xp + point;
 
             const taskIndex = userFromDb.completedTasks.findIndex(task => task.task.toString() === req.body.taskId);
             userFromDb.completedTasks[taskIndex].status = "completed";
+            const point = userFromDb.completedTasks[taskIndex].checked_the_solution ? req.body.point - 5 : req.body.point;
+            userFromDb.xp = userFromDb.xp + point;
 
             const missionFromDb = await Mission.findOne({ _id: req.body.missionId });
             const missionTaskIndex = missionFromDb.tasks.findIndex(task => task._id.toString() === req.body.taskId);

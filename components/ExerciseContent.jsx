@@ -74,7 +74,6 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                 taskId: task._id,
                 missionId: mission._id,
                 point: task.point || 10,
-                openedSolution: checkedTheSolution
             }
             const responseTaskCompleted = await fetch('/api/user/taskCompleted', {
                 method: 'POST',
