@@ -18,17 +18,12 @@ export default function CharacterDialog({ open, user, characters, handleClose })
     const handleCharacter = async (event) => {
         event.preventDefault();
 
-        const data = {
-            id: user.id,
-            character: selectedCharacter,
-        }
-
         const response = await fetch('/api/user/character', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({ character: selectedCharacter }),
         });
         const result = await response.json();
         if (response.status < 300) {

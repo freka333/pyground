@@ -29,7 +29,6 @@ export default function LessonContent({ user, mission, task, missionIdList }) {
     const handleNextTask = async () => {
         if (task.state === 'started') {
             const data = {
-                id: user.id,
                 taskId: task._id,
                 missionId: mission._id,
                 point: task.point || 10,

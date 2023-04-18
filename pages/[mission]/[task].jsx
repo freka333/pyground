@@ -24,16 +24,12 @@ export default function ProjectPage({ foundMission, foundTask, hasError, userInf
     }
 
     const handleIntroClose = async () => {
-        const data = {
-            id: userInfo.id,
-            taskId: foundTask._id,
-        }
         const response = await fetch('/api/user/firstTaskStatus', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(data),
+            body: JSON.stringify({ taskId: foundTask._id }),
         });
         await response.json();
         refreshData();

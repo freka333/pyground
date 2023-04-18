@@ -26,18 +26,12 @@ export default function NameDialog({ open, user, handleClose }) {
         event.preventDefault();
 
         if (!errorMessage) {
-
-            const data = {
-                id: user.id,
-                name: name,
-            }
-
             const response = await fetch('/api/user/nickname', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify({ name }),
             });
             const result = await response.json();
             if (response.status < 300) {

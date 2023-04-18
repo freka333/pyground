@@ -69,7 +69,6 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
 
         if (task.state === 'started' && result.state === 'completed') {
             const data = {
-                id: user.id,
                 taskId: task._id,
                 missionId: mission._id,
                 point: task.point || 10,
@@ -117,7 +116,6 @@ export default function ExerciseContent({ user, mission, task, missionIdList, de
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    id: user.id,
                     taskId: task._id,
                     openedSolution: true
                 }),
