@@ -4,22 +4,15 @@ const openFunction = `import pathlib
 import io
                 
 def open(source_file):
-    if(source_file == "public/sources/quenya.txt"):
-        file = pathlib.Path("public/sources/quenya_v2.txt")
-        txt = file.read_text()
-        return io.StringIO(txt)
-    elif(source_file == "public/sources/terkep.txt"):
+    file = pathlib.Path("public/sources/quenya_v2.txt")
+    if(source_file == "public/sources/terkep.txt"):
         file = pathlib.Path("public/sources/terkep_v2.txt")
-        txt = file.read_text()
-        return io.StringIO(txt)
     elif(source_file == "public/sources/fozetek.txt"):
         file = pathlib.Path("public/sources/fozetek_v2.txt")
-        txt = file.read_text()
-        return io.StringIO(txt)
     elif(source_file == "public/sources/orkok.txt"):
         file = pathlib.Path("public/sources/orkok_v2.txt")
-        txt = file.read_text()
-        return io.StringIO(txt)
+    txt = file.read_text()
+    return io.StringIO(txt)
 
 `
 
